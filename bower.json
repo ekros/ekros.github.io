@@ -1,0 +1,22 @@
+{
+  "name": "ekros.github.io",
+  "homepage": "https://github.com/ekros/ekros.github.io",
+  "authors": [
+    "Eric Ros <ericrosbh@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pixi.js": "pixi#~3.0.8"
+  }
+}
