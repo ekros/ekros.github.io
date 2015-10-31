@@ -11,6 +11,8 @@ var texture = PIXI.Texture.fromImage('assets/me.png');
 // create a new Sprite using the texture
 var me = new PIXI.Sprite(texture);
 
+gravity(me);
+
 // center the sprite's anchor point
 me.anchor.x = 0.5;
 me.anchor.y = 0.5;
@@ -21,31 +23,13 @@ me.position.y = window.innerHeight/2;
 
 stage.addChild(me);
 
-// TEXT...............
-var basicText = new PIXI.Text('UNDER CONSTRUCTION');
-basicText.x = window.innerWidth/2;
-basicText.y = window.innerHeight/2;
-
-stage.addChild(basicText);
-
-var style = {
-    font : 'bold italic 36px Arial',
-    fill : '#F7EDCA',
-    stroke : '#4a1850',
-    strokeThickness : 5,
-    dropShadow : true,
-    dropShadowColor : '#000000',
-    dropShadowAngle : Math.PI / 6,
-    dropShadowDistance : 6,
-    wordWrap : true,
-    wordWrapWidth : 440
-};
-
 // start animating
 animate();
 function animate() {
     requestAnimationFrame(animate);
 
+    me.fall();
+    
     // render the container
     renderer.render(stage);
 }
