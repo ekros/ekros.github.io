@@ -5,50 +5,41 @@ document.body.appendChild(renderer.view);
 var stage = new PIXI.Container();
 
 // ME...............
-// create a texture from an image path
-// var texture = PIXI.Texture.fromImage('assets/me.png');
-
 var me;
 
 PIXI.loader
-    // add resources
-    .add('me', 'assets/me.png')
-    // listen for progress
-    .on('progress', onProgressCallback)
-    // load resources
-    .load(function (loader, resources) {
-        // resources is an object containing the loaded resources, keyed by the names you used above.
-        me = new PIXI.Sprite(resources.me.texture);
-    })
-    .once('complete', onLoadedCallback);
+    .add('assets/me.png') // add resources
+    .add('assets/wall.png') // add resources
+    .load(setup); // call setup when finished
 
-function onProgressCallback()
-{
-    // do nothing
-}
+engine.start(); // start game engine
 
 // scene setup
-function onLoadedCallback()
+function setup()
 {
-  // create a new Sprite using the texture
-  // var meTexture = PIXI.TextureCache["assets/me.png"];
-  // var me = new PIXI.Sprite(meTexture);
+  me = new PIXI.Sprite(PIXI.loader.resources['assets/me.png'].texture);
+  wall = new PIXI.Sprite(PIXI.loader.resources['assets/wall.png'].texture);
 
   gravity(me);
   controllable(me);
 
+  solid(wall);
+
   // center the sprite's anchor point
-  me.anchor.x = 0.5;
-  me.anchor.y = 0.5;
+  // me.anchor.x = 0.5;
+  // me.anchor.y = 0.5;
 
   // move the sprite to the center of the screen
   me.position.x = window.innerWidth/2 - 100;
   me.position.y = window.innerHeight/2;
+  wall.position.x = window.innerWidth/2;
+  wall.position.y = window.innerHeight - 100;
 
   console.log("1, 1: " + me.getBounds().contains(1, 1));
   console.log(me.position.x + ", " + me.position.y + ": " + me.getBounds().contains(me.position.x, me.position.y));
 
   stage.addChild(me);
+  stage.addChild(wall);
 }
 
 // start animating
@@ -57,6 +48,7 @@ function animate() {
     requestAnimationFrame(animate);
 
     me.fall();
+    engine.check();
 
     // render the container
     renderer.render(stage);

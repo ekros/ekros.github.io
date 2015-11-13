@@ -11,7 +11,7 @@ var gravity = function(obj)
   obj.hasGravity = function()
   {
       return true;
-  }
+  };
 
   obj.fall = function()
   {
@@ -27,7 +27,7 @@ var gravity = function(obj)
       obj.position.y = window.innerHeight - 80;
       // obj.jump();
     }
-  }
+  };
 
   obj.jump = function()
   {
@@ -37,7 +37,7 @@ var gravity = function(obj)
         obj.jumping = true;
         obj.speed = -20;
       }
-  }
+  };
 }
 
 // controllable: the object can be controlled with the keyboard
