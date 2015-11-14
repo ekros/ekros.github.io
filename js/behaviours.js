@@ -15,7 +15,7 @@ var gravity = function(obj)
 
   obj.fall = function()
   {
-    if (obj.position.y < window.innerHeight - 80)
+    if (obj.position.y < window.innerHeight - 120)
     {
       obj.position.y += obj.speed;
       obj.speed += obj.acc;
@@ -24,7 +24,7 @@ var gravity = function(obj)
     {
       obj.speed = 0;
       obj.jumping = false;
-      obj.position.y = window.innerHeight - 80;
+      obj.position.y = window.innerHeight - 120;
       // obj.jump();
     }
   };
@@ -46,11 +46,21 @@ var controllable = function(obj)
   console.log("Controllable behaviour enabled.");
   var speed = 5;
 
+  obj.left = function()
+  {
+    if (!obj.isBlocked) obj.position.x -= speed;
+  };
+
+  obj.right = function()
+  {
+    if (!obj.isBlocked) obj.position.x += speed;
+  };
+
   window.addEventListener('keydown', function(event) {
     console.log(event.keyCode + " pressed!");
     switch (event.keyCode) {
       case 37: // Left
-        obj.position.x -= speed;
+        obj.moveLeft = true;
       break;
 
       case 38: // Up
@@ -58,7 +68,7 @@ var controllable = function(obj)
       break;
 
       case 39: // Right
-        obj.position.x += speed;
+        obj.moveRight = true;
       break;
 
       case 40: // Down
@@ -73,6 +83,18 @@ var controllable = function(obj)
     }
   }, false);
 
+  window.addEventListener('keyup', function(event) {
+    console.log(event.keyCode + " key up!");
+    switch (event.keyCode) {
+      case 37:
+        obj.moveLeft = false;
+      break;
+
+      case 39:
+        obj.moveRight = false;
+      break;
+    }
+  }, false);
 }
 
 // solid: the object cannot be traspased by other objects
@@ -80,4 +102,5 @@ var solid = function(obj)
 {
   console.log("Solid behaviour enabled.");
 
+  obj.solid = true;
 }

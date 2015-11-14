@@ -4,6 +4,8 @@
 var engine =
 {
   colision: false,
+  cObj: [], // array of collided objects
+  showColisions: true,
   start: function()
   {
     console.log("Starting game engine...");
@@ -11,6 +13,7 @@ var engine =
   },
   check: function()
   {
+    var colisionedObjects = [];
     for (i in stage.children)
     {
       for (j in stage.children)
@@ -25,6 +28,24 @@ var engine =
             {
               console.log("colision!!");
               this.colision = true;
+              this.cObj.push(ci, cj);
+              console.log("colisioned objects: ");
+              console.log(this.cObj);
+              ci.tint = 0x00FF00;
+              cj.tint = 0x00FF00;
+
+              if (ci.solid)
+              {
+                cj.blocked = true;
+                cj.moveLeft = false;
+                cj.moveRight = false;
+              }
+              if (cj.solid)
+              {
+                ci.blocked = true;
+                ci.moveLeft = false;
+                ci.moveRight = false;
+              }
             }
           }
         }

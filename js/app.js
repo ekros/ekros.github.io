@@ -33,7 +33,7 @@ function setup()
   me.position.x = window.innerWidth/2 - 100;
   me.position.y = window.innerHeight/2;
   wall.position.x = window.innerWidth/2;
-  wall.position.y = window.innerHeight - 100;
+  wall.position.y = window.innerHeight - 150;
 
   console.log("1, 1: " + me.getBounds().contains(1, 1));
   console.log(me.position.x + ", " + me.position.y + ": " + me.getBounds().contains(me.position.x, me.position.y));
@@ -49,6 +49,15 @@ function animate() {
 
     me.fall();
     engine.check();
+    
+    if (me.moveLeft)
+    {
+      me.left();
+    }
+    if (me.moveRight)
+    {
+      me.right();
+    }
 
     // render the container
     renderer.render(stage);
