@@ -15,29 +15,33 @@ var gravity = function(obj)
 
   obj.fall = function()
   {
-    if (obj.position.y < window.innerHeight - 120)
+    if (obj.position.y < window.innerHeight - 100)
     {
       obj.position.y += obj.speed;
       obj.speed += obj.acc;
     }
     else
     {
-      obj.speed = 0;
-      obj.jumping = false;
-      obj.position.y = window.innerHeight - 120;
-      // obj.jump();
+      obj.jump(40);
     }
   };
 
-  obj.jump = function()
+  obj.stopFall = function()
+  {
+    obj.speed = 0;
+    obj.jumping = false;
+  };
+
+  obj.jump = function(intensity)
   {
       if (!obj.jumping)
       {
         obj.position.y -= 2;
         obj.jumping = true;
-        obj.speed = -20;
+        obj.speed = -intensity;
       }
   };
+  return obj;
 }
 
 // controllable: the object can be controlled with the keyboard
@@ -48,12 +52,14 @@ var controllable = function(obj)
 
   obj.left = function()
   {
-    if (!obj.isBlocked) obj.position.x -= speed;
+    // if (!obj.isBlocked) obj.position.x -= speed;
+    obj.position.x -= speed;
   };
 
   obj.right = function()
   {
-    if (!obj.isBlocked) obj.position.x += speed;
+    // if (!obj.isBlocked) obj.position.x += speed;
+    obj.position.x += speed;
   };
 
   window.addEventListener('keydown', function(event) {
@@ -77,7 +83,7 @@ var controllable = function(obj)
 
       case 32: // Space
         if (obj.hasGravity()) {
-          obj.jump();
+          obj.jump(20);
         }
       break;
     }
