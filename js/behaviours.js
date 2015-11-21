@@ -3,7 +3,7 @@
 // gravity: the object falls and can jump
 var gravity = function(obj)
 {
-  console.log("Gravity behaviour enabled.");
+  // console.log("Gravity behaviour enabled.");
   obj.acc = 1;
   obj.speed = 0;
   obj.jumping = false;
@@ -22,14 +22,8 @@ var gravity = function(obj)
     }
     else
     {
-      obj.jump(40);
+      obj.jump(30);
     }
-  };
-
-  obj.stopFall = function()
-  {
-    obj.speed = 0;
-    obj.jumping = false;
   };
 
   obj.jump = function(intensity)

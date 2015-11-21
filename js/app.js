@@ -8,30 +8,17 @@ var stage = new PIXI.Container();
 // ME...............
 var me;
 
-PIXI.loader
-    .add('assets/me.png') // add resources
-    .add('assets/wall.png')
-    .add('assets/ground.png')
-    .load(setup); // call setup when finished
-
 engine.start(); // start game engine
 
 // scene setup
 function setup()
 {
   me = new PIXI.Sprite(PIXI.loader.resources['assets/me.png'].texture);
-  wall = new PIXI.Sprite(PIXI.loader.resources['assets/wall.png'].texture);
-  ground = new PIXI.Sprite(PIXI.loader.resources['assets/ground.png'].texture);
-  ground2 = new PIXI.Sprite(PIXI.loader.resources['assets/ground.png'].texture);
-  ground3 = new PIXI.Sprite(PIXI.loader.resources['assets/ground.png'].texture);
+
+  engine.load_level();
 
   gravity(me);
   controllable(me);
-
-  solid(wall);
-  solid(ground);
-  solid(ground2);
-  solid(ground3);
 
   // center the sprite's anchor point
   // me.anchor.x = 0.5;
@@ -40,20 +27,8 @@ function setup()
   // move the sprite to the center of the screen
   me.position.x = window.innerWidth/2 - 100;
   me.position.y = window.innerHeight/2;
-  wall.position.x = window.innerWidth/2;
-  wall.position.y = window.innerHeight - 150;
-  ground.position.x = window.innerWidth/2 - 200;
-  ground.position.y = window.innerHeight - 200;
-  ground2.position.x = window.innerWidth/2 - 100;
-  ground2.position.y = window.innerHeight - 300;
-  ground3.position.x = window.innerWidth/2;
-  ground3.position.y = window.innerHeight - 400;
 
   stage.addChild(me);
-  stage.addChild(wall);
-  stage.addChild(ground);
-  stage.addChild(ground2);
-  stage.addChild(ground3);
 }
 
 // start animating
@@ -72,6 +47,8 @@ function animate() {
     {
       me.right();
     }
+
+    document.getElementById("fps").innerHTML = getFPS();
 
     // render the container
     renderer.render(stage);
