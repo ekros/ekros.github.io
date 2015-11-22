@@ -1,10 +1,35 @@
 // behaviours
 
+// game character
+var character = function(obj)
+{
+  console.log("Character behavior enabled.");
+  obj.respawn = function()
+  {
+    obj.position.x = engine.charSpawnPos.x;
+    obj.position.y = engine.charSpawnPos.y;
+  };
+};
+
+// enemy
+var enemy = function(obj)
+{
+  console.log("Enemy behavior enabled.");
+  obj.isEnemy = true;
+  obj.speed = 1;
+};
+
 // gravity: the object falls and can jump
 var gravity = function(obj)
 {
   // console.log("Gravity behaviour enabled.");
   obj.acc = 1;
+
+  obj.respawn = function()
+  {
+    obj.position.x = engine.charSpawnPos.x;
+    obj.position.y = engine.charSpawnPos.y;
+  };
   obj.speed = 0;
   obj.jumping = false;
 
@@ -22,7 +47,7 @@ var gravity = function(obj)
     }
     else
     {
-      obj.jump(30);
+      obj.respawn();
     }
   };
 
@@ -79,6 +104,26 @@ var controllable = function(obj)
         if (obj.hasGravity()) {
           obj.jump(20);
         }
+      break;
+
+      case 119: // w
+        engine.viewportY -= 2;
+        console.log("y: " + engine.viewportY);
+      break;
+
+      case 115: // s
+        engine.viewportY += 2;
+        console.log("x: " + engine.viewportY);
+      break;
+
+      case 97: // a
+        engine.viewportX -= 2;
+        console.log("x: " + engine.viewportX);
+      break;
+
+      case 100: // d
+        engine.viewportX += 2;
+        console.log("x: " + engine.viewportX);
       break;
     }
   }, false);

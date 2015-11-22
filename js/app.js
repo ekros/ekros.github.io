@@ -5,30 +5,16 @@ document.body.appendChild(renderer.view);
 // create the root of the scene graph
 var stage = new PIXI.Container();
 
-// ME...............
-var me;
-
 engine.start(); // start game engine
 
 // scene setup
 function setup()
 {
-  me = new PIXI.Sprite(PIXI.loader.resources['assets/me.png'].texture);
-
   engine.load_level();
 
-  gravity(me);
-  controllable(me);
+  engine.load_char();
 
-  // center the sprite's anchor point
-  // me.anchor.x = 0.5;
-  // me.anchor.y = 0.5;
-
-  // move the sprite to the center of the screen
-  me.position.x = window.innerWidth/2 - 100;
-  me.position.y = window.innerHeight/2;
-
-  stage.addChild(me);
+  engine.load_enemies();
 }
 
 // start animating
@@ -37,7 +23,7 @@ function animate() {
     requestAnimationFrame(animate);
 
     me.fall();
-    engine.check();
+    engine.run();
 
     if (me.moveLeft)
     {
