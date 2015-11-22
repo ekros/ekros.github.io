@@ -4,8 +4,11 @@
 var character = function(obj)
 {
   console.log("Character behavior enabled.");
+  obj.isCharacter = true;
   obj.respawn = function()
   {
+    obj.fallSpeed = 0;
+    obj.jumping = 0;
     obj.position.x = engine.charSpawnPos.x;
     obj.position.y = engine.charSpawnPos.y;
   };
@@ -17,6 +20,22 @@ var enemy = function(obj)
   console.log("Enemy behavior enabled.");
   obj.isEnemy = true;
   obj.speed = 1;
+
+  // action when a character collision is detected
+  obj.collisionAction = function(c)
+  {
+    if (c.position.y < obj.position.y && c.fallSpeed > 0)
+    {
+      console.log("killed!");
+      c.jump(10);
+      obj.position.y = 2000;
+    }
+    else
+    {
+      console.log("It hurts!");
+      c.respawn();
+    }
+  };
 };
 
 // gravity: the object falls and can jump
@@ -25,12 +44,7 @@ var gravity = function(obj)
   // console.log("Gravity behaviour enabled.");
   obj.acc = 1;
 
-  obj.respawn = function()
-  {
-    obj.position.x = engine.charSpawnPos.x;
-    obj.position.y = engine.charSpawnPos.y;
-  };
-  obj.speed = 0;
+  obj.fallSpeed = 0;
   obj.jumping = false;
 
   obj.hasGravity = function()
@@ -42,8 +56,8 @@ var gravity = function(obj)
   {
     if (obj.position.y < window.innerHeight - 100)
     {
-      obj.position.y += obj.speed;
-      obj.speed += obj.acc;
+      obj.position.y += obj.fallSpeed;
+      obj.fallSpeed += obj.acc;
     }
     else
     {
@@ -57,7 +71,7 @@ var gravity = function(obj)
       {
         obj.position.y -= 2;
         obj.jumping = true;
-        obj.speed = -intensity;
+        obj.fallSpeed = -intensity;
       }
   };
   return obj;
@@ -106,6 +120,17 @@ var controllable = function(obj)
         }
       break;
 
+      case 70:
+        if (obj.text == null)
+        {
+          engine.talk(obj, "Hi!");
+        }
+        else
+        {
+          engine.talk(obj, null);
+        }
+      break;
+/*
       case 119: // w
         engine.viewportY -= 2;
         console.log("y: " + engine.viewportY);
@@ -124,7 +149,7 @@ var controllable = function(obj)
       case 100: // d
         engine.viewportX += 2;
         console.log("x: " + engine.viewportX);
-      break;
+      break; */
     }
   }, false);
 

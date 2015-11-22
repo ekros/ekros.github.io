@@ -9,7 +9,8 @@ var engine =
   viewportY: -100,
   showColisions: true,
   charSpawnPos: {x: null, y: null},
-  enemySpawnPos: {x: null, y: null},
+  enemySpawnPos: [],
+  blockPoint: [],
   start: function()
   {
     console.log("Starting game engine...");
@@ -59,9 +60,13 @@ var engine =
         }
         else if (data[dataIndex] == 4)
         {
-          this.enemySpawnPos.x = tileX;
-          this.enemySpawnPos.y = tileY;
+          this.enemySpawnPos.push({x: tileX, y: tileY});
           console.log("Character spawn position detected: " + tileX + " " + tileY);
+        }
+        else if (data[dataIndex] == 5)
+        {
+          this.blockPoint.push({x: tileX, y: tileY});
+          console.log("Block point detected. " + tileX + " " + tileY);
         }
       }
     }
@@ -82,16 +87,19 @@ var engine =
   },
   load_enemies: function()
   {
-    e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy.png'].texture);
+    for (i in engine.enemySpawnPos)
+    {
+      e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy.png'].texture);
 
-    enemy(e);
-    // gravity(e);
+      enemy(e);
+      // gravity(e);
 
-    // move the sprite to the spawn position
-    e.position.x = engine.enemySpawnPos.x;
-    e.position.y = engine.enemySpawnPos.y;
+      // move the sprite to the spawn position
+      e.position.x = engine.enemySpawnPos[i].x;
+      e.position.y = engine.enemySpawnPos[i].y;
 
-    stage.addChild(e);
+      stage.addChild(e);
+    }
   },
   run: function()
   {
@@ -101,7 +109,18 @@ var engine =
       if (stage.children[i].isEnemy)
       {
         var e = stage.children[i];
-        e.position.x += 1;
+        e.position.x += e.speed;
+        // console.log("blockPoint " + engine.blockPoint[0].x);
+        for (k in engine.blockPoint)
+        {
+          // console.log("testing X: " + e.position.x + " Y: " + e.position.y + " against: X: " +
+          //  engine.blockPoint[k].x + " Y: " + engine.blockPoint[k].y);
+          if (b.hitTestPoint(engine.blockPoint[k], e))
+          {
+            // console.log("enemy hit with block point");
+            e.speed = -e.speed;
+          }
+        }
       }
 
       for (j in stage.children)
@@ -122,15 +141,38 @@ var engine =
               // stop fall
               if (ci.solid || cj.solid)
               {
-                ci.speed = 0;
+                ci.fallSpeed = 0;
                 ci.jumping = false;
-                cj.speed = 0;
+                cj.fallSpeed = 0;
                 cj.jumping = false;
+              }
+
+              // char - enemy collision
+              if (ci.isCharacter && cj.isEnemy)
+              {
+                cj.collisionAction(ci);
               }
             }
         }
       }
     }
     return this.cObj;
+  },
+  talk: function(obj, text)
+  {
+    if (text == null)
+    {
+      obj.text.visible = false;
+      obj.text = null;
+    }
+    else
+    {
+      obj.text = new PIXI.Text(text);
+      obj.text.x = obj.position.x + 20;
+      obj.text.y = obj.position.y - 20;
+      obj.text.visible = true;
+
+      stage.addChild(obj.text);
+    }
   }
 }
