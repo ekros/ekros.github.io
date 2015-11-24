@@ -29,6 +29,7 @@ var enemy = function(obj)
       console.log("killed!");
       c.jump(10);
       obj.position.y = 2000;
+      engine.enemiesKilled++;
     }
     else
     {

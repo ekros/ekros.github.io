@@ -1,4 +1,7 @@
-var ground =
+var levels = [
+{
+  // reserved for main menu
+},
 {
  "height":24,
  "layers":[
@@ -42,4 +45,4 @@ var ground =
  "tilewidth":32,
  "version":1,
  "width":32
-}
+}]

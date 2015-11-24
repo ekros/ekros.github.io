@@ -22,16 +22,16 @@ animate();
 function animate() {
     requestAnimationFrame(animate);
 
-    me.fall();
+    engine.me.fall();
     engine.run();
 
-    if (me.moveLeft)
+    if (engine.me.moveLeft)
     {
-      me.left();
+      engine.me.left();
     }
-    if (me.moveRight)
+    if (engine.me.moveRight)
     {
-      me.right();
+      engine.me.right();
     }
 
     document.getElementById("fps").innerHTML = getFPS();

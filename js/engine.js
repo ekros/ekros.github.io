@@ -1,5 +1,12 @@
 // engine: where the magic happens
 
+// win conditions
+var winConditions =
+{
+  killAll: 0,
+  collideWithObject: 1
+}
+
 // collision checking
 var engine =
 {
@@ -11,9 +18,14 @@ var engine =
   charSpawnPos: {x: null, y: null},
   enemySpawnPos: [],
   blockPoint: [],
+  currentLevel: 1,
+  level: null,
+  enemiesKilled: 0,
+  me: null,
   start: function()
   {
     console.log("Starting game engine...");
+    level = levels[this.currentLevel];
     PIXI.loader
         .add('assets/me.png') // add resources
         .add('assets/enemy.png')
@@ -23,12 +35,13 @@ var engine =
   },
   load_level: function()
   {
+    this.enemiesKilled = 0;
     console.log("Loading level...");
-    var data = ground.layers[0].data;
-    var tileWidth = ground.tilesets[0].tilewidth;
-    var tileHeight = ground.tilesets[0].tileheight;
-    var width = ground.width;
-    var height = ground.height;
+    var data = level.layers[0].data;
+    var tileWidth = level.tilesets[0].tilewidth;
+    var tileHeight = level.tilesets[0].tileheight;
+    var width = level.width;
+    var height = level.height;
     console.log("tile -> width: " + tileWidth + ", height: " + tileHeight);
     console.log("level -> width: " + width + ", height: " + height);
     var s = null;
@@ -73,17 +86,17 @@ var engine =
   },
   load_char: function()
   {
-    me = new PIXI.Sprite(PIXI.loader.resources['assets/me.png'].texture);
+    this.me = new PIXI.Sprite(PIXI.loader.resources['assets/me.png'].texture);
 
-    character(me);
-    gravity(me);
-    controllable(me);
+    character(this.me);
+    gravity(this.me);
+    controllable(this.me);
 
     // move the sprite to the spawn position
-    me.position.x = engine.charSpawnPos.x;
-    me.position.y = engine.charSpawnPos.y;
+    this.me.position.x = engine.charSpawnPos.x;
+    this.me.position.y = engine.charSpawnPos.y;
 
-    stage.addChild(me);
+    stage.addChild(this.me);
   },
   load_enemies: function()
   {
@@ -134,7 +147,7 @@ var engine =
             if (!ci.solid && b.hit(ci, cj, (ci.solid || cj.solid)))
             {
               //console.log("colision!!");
-              this.cObj.push(ci, cj);
+              //this.cObj.push(ci, cj);
               //console.log("collided objects: ");
               //console.log(this.cObj);
 
@@ -156,7 +169,13 @@ var engine =
         }
       }
     }
-    return this.cObj;
+    // check win condition
+    if (this.enemiesKilled == this.enemySpawnPos.length)
+    {
+      this.talk(this.me, "Well done!");
+      this.enemiesKilled = 0;
+    }
+    // return this.cObj;
   },
   talk: function(obj, text)
   {
