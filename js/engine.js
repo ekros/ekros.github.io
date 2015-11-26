@@ -15,17 +15,27 @@ var engine =
   viewportX: 50,
   viewportY: -100,
   showColisions: true,
-  charSpawnPos: {x: null, y: null},
-  enemySpawnPos: [],
-  blockPoint: [],
   currentLevel: 1,
-  level: null,
-  enemiesKilled: 0,
   me: null,
+  level: {
+    data: null,
+    charSpawnPos: {x: null, y: null},
+    enemySpawnPos: [],
+    blockPoint: [],
+    enemiesKilled: 0,
+    reset: function()
+    {
+        data = null;
+        charSpawnPos = {x: null, y: null};
+        enemySpawnPos = [];
+        blockPoint = [];
+        enemiesKilled = 0;
+    }
+  },
   start: function()
   {
     console.log("Starting game engine...");
-    level = levels[this.currentLevel];
+    this.level.data = levels[this.currentLevel];
     PIXI.loader
         .add('assets/me.png') // add resources
         .add('assets/enemy.png')
@@ -35,13 +45,13 @@ var engine =
   },
   load_level: function()
   {
-    this.enemiesKilled = 0;
+    this.level.enemiesKilled = 0;
     console.log("Loading level...");
-    var data = level.layers[0].data;
-    var tileWidth = level.tilesets[0].tilewidth;
-    var tileHeight = level.tilesets[0].tileheight;
-    var width = level.width;
-    var height = level.height;
+    var data = this.level.data.layers[0].data;
+    var tileWidth = this.level.data.tilesets[0].tilewidth;
+    var tileHeight = this.level.data.tilesets[0].tileheight;
+    var width = this.level.data.width;
+    var height = this.level.data.height;
     console.log("tile -> width: " + tileWidth + ", height: " + tileHeight);
     console.log("level -> width: " + width + ", height: " + height);
     var s = null;
@@ -67,22 +77,33 @@ var engine =
         }
         else if (data[dataIndex] == 3)
         {
-          this.charSpawnPos.x = tileX;
-          this.charSpawnPos.y = tileY;
+          this.level.charSpawnPos.x = tileX;
+          this.level.charSpawnPos.y = tileY;
           console.log("Character spawn position detected: " + tileX + " " + tileY);
         }
         else if (data[dataIndex] == 4)
         {
-          this.enemySpawnPos.push({x: tileX, y: tileY});
+          this.level.enemySpawnPos.push({x: tileX, y: tileY});
           console.log("Character spawn position detected: " + tileX + " " + tileY);
         }
         else if (data[dataIndex] == 5)
         {
-          this.blockPoint.push({x: tileX, y: tileY});
+          this.level.blockPoint.push({x: tileX, y: tileY});
           console.log("Block point detected. " + tileX + " " + tileY);
         }
       }
     }
+  },
+  next_level: function()
+  {
+    stage.removeChildren();
+    this.level.reset();
+    console.log("Going to next level...");
+    this.currentLevel++;
+    this.level.data = levels[this.currentLevel];
+    this.load_level();
+    this.load_char();
+    this.load_enemies();
   },
   load_char: function()
   {
@@ -93,14 +114,14 @@ var engine =
     controllable(this.me);
 
     // move the sprite to the spawn position
-    this.me.position.x = engine.charSpawnPos.x;
-    this.me.position.y = engine.charSpawnPos.y;
+    this.me.position.x = engine.level.charSpawnPos.x;
+    this.me.position.y = engine.level.charSpawnPos.y;
 
     stage.addChild(this.me);
   },
   load_enemies: function()
   {
-    for (i in engine.enemySpawnPos)
+    for (i in engine.level.enemySpawnPos)
     {
       e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy.png'].texture);
 
@@ -108,8 +129,8 @@ var engine =
       // gravity(e);
 
       // move the sprite to the spawn position
-      e.position.x = engine.enemySpawnPos[i].x;
-      e.position.y = engine.enemySpawnPos[i].y;
+      e.position.x = engine.level.enemySpawnPos[i].x;
+      e.position.y = engine.level.enemySpawnPos[i].y;
 
       stage.addChild(e);
     }
@@ -124,11 +145,11 @@ var engine =
         var e = stage.children[i];
         e.position.x += e.speed;
         // console.log("blockPoint " + engine.blockPoint[0].x);
-        for (k in engine.blockPoint)
+        for (k in engine.level.blockPoint)
         {
           // console.log("testing X: " + e.position.x + " Y: " + e.position.y + " against: X: " +
           //  engine.blockPoint[k].x + " Y: " + engine.blockPoint[k].y);
-          if (b.hitTestPoint(engine.blockPoint[k], e))
+          if (b.hitTestPoint(engine.level.blockPoint[k], e))
           {
             // console.log("enemy hit with block point");
             e.speed = -e.speed;
@@ -170,10 +191,10 @@ var engine =
       }
     }
     // check win condition
-    if (this.enemiesKilled == this.enemySpawnPos.length)
+    if (this.level.enemiesKilled == this.level.enemySpawnPos.length)
     {
       this.talk(this.me, "Well done!");
-      this.enemiesKilled = 0;
+      engine.next_level();
     }
     // return this.cObj;
   },

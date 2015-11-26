@@ -5,12 +5,13 @@ var character = function(obj)
 {
   console.log("Character behavior enabled.");
   obj.isCharacter = true;
+  obj.jumpPower = 18;
   obj.respawn = function()
   {
     obj.fallSpeed = 0;
     obj.jumping = 0;
-    obj.position.x = engine.charSpawnPos.x;
-    obj.position.y = engine.charSpawnPos.y;
+    obj.position.x = engine.level.charSpawnPos.x;
+    obj.position.y = engine.level.charSpawnPos.y;
   };
 };
 
@@ -27,9 +28,9 @@ var enemy = function(obj)
     if (c.position.y < obj.position.y && c.fallSpeed > 0)
     {
       console.log("killed!");
-      c.jump(10);
+      c.jump(c.jumpPower/2);
       obj.position.y = 2000;
-      engine.enemiesKilled++;
+      engine.level.enemiesKilled++;
     }
     else
     {
@@ -117,7 +118,7 @@ var controllable = function(obj)
 
       case 32: // Space
         if (obj.hasGravity()) {
-          obj.jump(20);
+          obj.jump(obj.jumpPower);
         }
       break;
 
@@ -131,26 +132,6 @@ var controllable = function(obj)
           engine.talk(obj, null);
         }
       break;
-/*
-      case 119: // w
-        engine.viewportY -= 2;
-        console.log("y: " + engine.viewportY);
-      break;
-
-      case 115: // s
-        engine.viewportY += 2;
-        console.log("x: " + engine.viewportY);
-      break;
-
-      case 97: // a
-        engine.viewportX -= 2;
-        console.log("x: " + engine.viewportX);
-      break;
-
-      case 100: // d
-        engine.viewportX += 2;
-        console.log("x: " + engine.viewportX);
-      break; */
     }
   }, false);
 
