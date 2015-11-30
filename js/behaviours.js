@@ -84,6 +84,7 @@ var controllable = function(obj)
 {
   console.log("Controllable behaviour enabled.");
   var speed = 5;
+  var items = 0; // collected items
 
   obj.left = function()
   {
@@ -156,3 +157,25 @@ var solid = function(obj)
 
   obj.solid = true;
 }
+
+// ground: the object cannot be traspased from above
+var ground = function(obj)
+{
+  console.log("Ground behavior enabled");
+
+  obj.ground = true;
+}
+
+// collectable: the object is collected when touching a character
+var collectable = function(obj)
+{
+  console.log("Item behavior enabled");
+
+  obj.isCollectable = true;
+
+  obj.collisionAction = function(c)
+  {
+    c.items++;
+    obj.position.y = 2000;
+  };
+};
