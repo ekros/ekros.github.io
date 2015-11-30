@@ -1,5 +1,5 @@
 b = new Bump(PIXI); // bump, the collision detector
-var renderer = PIXI.autoDetectRenderer(window.innerWidth-30, window.innerHeight-30,{backgroundColor : 0xfbefc3});
+var renderer = PIXI.autoDetectRenderer(1024, 768, {backgroundColor : 0xfbefc3});
 document.body.appendChild(renderer.view);
 
 // create the root of the scene graph
