@@ -281,7 +281,7 @@ var engine =
     }
     // return this.cObj;
   },
-  talk: function(obj, text)
+  talk: function(obj, text, delay)
   {
     if (text == null)
     {
@@ -295,7 +295,29 @@ var engine =
       obj.text.y = obj.position.y - 20;
       obj.text.visible = true;
 
-      stage.addChild(obj.text);
+      if (delay == null || delay == 0)
+      {
+        stage.addChild(obj.text);
+      }
+      else
+      {
+        var origText = obj.text.text;
+        var i = 0;
+        var writeText = function(t)
+        {
+          obj.text.text = t.slice(0, i);
+          var c = stage.addChild(obj.text);
+          setTimeout(function(){
+            i++;
+            if (obj.text.text.length < origText.length)
+            {
+              stage.removeChild(c);
+              writeText(origText);
+            }
+          }, delay);
+        };
+        writeText(origText);
+      }
     }
   }
 }
