@@ -169,13 +169,13 @@ var ground = function(obj)
 // collectable: the object is collected when touching a character
 var collectable = function(obj)
 {
-  console.log("Item behavior enabled");
+  console.log("Collectable behavior enabled");
 
   obj.isCollectable = true;
 
   obj.collisionAction = function(c)
   {
     c.items++;
-    obj.position.y = 2000;
+    stage.removeChild(obj);
   };
 };

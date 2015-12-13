@@ -41,9 +41,13 @@ var engine =
     PIXI.loader
         .add('assets/me.png') // add resources
         .add('assets/enemy.png')
-        .add('assets/ground.png')
+        .add('assets/ground1.png')
+        .add('assets/ground2.png')
+        .add('assets/char_spawn.png')
+        .add('assets/enemy_spawn.png')
+        .add('assets/block_point.png')
         .add('assets/star.png')
-        .add('assets/tileset_ground.png')
+        //.add('assets/tileset_ground.png')
         .load(setup); // call setup when finished
 
     window.addEventListener('keydown', function(event) {
@@ -80,21 +84,46 @@ var engine =
     console.log("level -> width: " + width + ", height: " + height);
     var s = null;
     var dataIndex = 0;
-    var tileset = PIXI.utils.TextureCache['assets/tileset_ground.png'];
+    //var tileset = PIXI.utils.TextureCache['assets/tileset_ground.png'];
     var aspect = this.level.data.tilesets[0].tileCount / this.level.data.tilesets[0].columns;
+    var cols = this.level.data.tilesets[0].columns;
+
+    // // load tileset
+    // var rectangles = [];
+    // for (var i = 0; i < cols; i++)
+    // {
+    //   for (var j = 0; j < 2; j++)
+    //   {
+    //     var r = new PIXI.Rectangle(i*tileWidth, j*tileHeight, tileWidth, tileHeight);
+    //     rectangles.push(r);
+    //   }
+    // }
+
+    //console.log(rectangles);
 
     for (var i = 0; i < height; i++)
     {
       for (var j = 0; j < width; j++, dataIndex++)
       {
-        var rect = new PIXI.Rectangle(0, 0, tileWidth, tileHeight);
-        tileset.frame = rect;
-        var tileX = tileWidth * j;
-        var tileY = tileHeight * i;
-        //console.log("dataIndex: " + dataIndex + ", data: " + data[dataIndex]);
-        if (data[dataIndex] == 1 || data[dataIndex] == 2)
+        if (data[dataIndex] != 0)
         {
-          var t1 = new PIXI.Sprite(tileset);
+          // tileset.frame = rectangles[data[dataIndex]];
+          // console.log(tileset.frame);
+          var tileX = tileWidth * j;
+          var tileY = tileHeight * i;
+        }
+        //console.log("dataIndex: " + dataIndex + ", data: " + data[dataIndex]);
+        if (data[dataIndex] == 1)
+        {
+          var t1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/ground1.png']);
+          solid(t1);
+          t1.position.x = tileX;
+          t1.position.y = tileY;
+          stage.addChild(t1);
+        }
+        else if (data[dataIndex] == 2)
+        {
+          var t1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/ground2.png']);
           solid(t1);
           t1.position.x = tileX;
           t1.position.y = tileY;
@@ -120,7 +149,7 @@ var engine =
         {
           //this.level.itemSpawnPos.push({x: tileX, y: tileY});
           //console.log("Item spawn position detected. " + tileX + " " + tileY);
-          var i1 = new PIXI.Sprite(tileset);
+          var i1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/star.png']);
           collectable(i1);
           i1.position.x = tileX;
           i1.position.y = tileY;
@@ -139,7 +168,7 @@ var engine =
     this.load_level();
     this.load_char();
     this.load_enemies();
-    this.load_items();
+    // this.load_items();
   },
   next_level: function()
   {
@@ -151,7 +180,7 @@ var engine =
     this.load_level();
     this.load_char();
     this.load_enemies();
-    this.load_items();
+    // this.load_items();
   },
   load_char: function()
   {
@@ -236,7 +265,7 @@ var engine =
               }
 
               // char - item collision
-              if (ci.isCharacter && cj.isItem)
+              if (ci.isCharacter && cj.isCollectable)
               {
                 cj.collisionAction(ci);
               }
