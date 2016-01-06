@@ -290,10 +290,15 @@ var engine =
     }
     else
     {
-      obj.text = new PIXI.Text(text);
+      obj.text = new PIXI.Text(text, {dropShadow: true, dropShadowColor: '#BBBBBB'});
       obj.text.x = obj.position.x + 20;
       obj.text.y = obj.position.y - 20;
       obj.text.visible = true;
+      obj.textBox = new PIXI.Graphics();
+      obj.textBox.lineStyle(2, 0xBBBBBB, 1);
+      obj.textBox.beginFill(0xEEEEEE);
+      obj.textBox.drawRoundedRect(obj.text.x - 2, obj.text.y - 2, obj.text.width, obj.text.height, 10);
+      //obj.text.mask = obj.textBox;
 
       if (delay == null || delay == 0)
       {
@@ -316,6 +321,7 @@ var engine =
             }
           }, delay);
         };
+        stage.addChild(obj.textBox);
         writeText(origText);
       }
     }

@@ -126,7 +126,7 @@ var controllable = function(obj)
       case 70:
         if (obj.text == null)
         {
-          engine.talk(obj, "Wellcome!\nLet's move!", 200);
+          engine.talk(obj, "Wellcome! Let's move!\nHurry up!!", 200);
         }
         else
         {
