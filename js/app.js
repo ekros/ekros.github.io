@@ -24,16 +24,7 @@ function animate() {
 
     engine.me.fall();
     engine.run();
-
-    if (engine.me.moveLeft)
-    {
-      engine.me.left();
-    }
-    if (engine.me.moveRight)
-    {
-      engine.me.right();
-    }
-
+    
     document.getElementById("fps").innerHTML = getFPS();
 
     // render the container

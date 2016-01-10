@@ -5,6 +5,7 @@ var character = function(obj)
 {
   console.log("Character behavior enabled.");
   obj.isCharacter = true;
+  obj.blocked = false;
   obj.jumpPower = 18;
   obj.respawn = function()
   {
@@ -12,6 +13,14 @@ var character = function(obj)
     obj.jumping = 0;
     obj.position.x = engine.level.charSpawnPos.x;
     obj.position.y = engine.level.charSpawnPos.y;
+  };
+  obj.block = function()
+  {
+    obj.blocked = true;
+  };
+  obj.unblock = function()
+  {
+    obj.blocked = false;
   };
 };
 
@@ -126,11 +135,8 @@ var controllable = function(obj)
       case 70:
         if (obj.text == null)
         {
-          engine.talk(obj, "Wellcome! Let's move!\nHurry up!!", 200);
-        }
-        else
-        {
-          engine.talk(obj, null);
+          // engine.talk(obj, "Wellcome! Let's move!\nHurry up!!", 200);
+          engine.talk(obj, ["Text one", "Text two", "And text three!!\nThis is awesome!!"], 200, 5000);
         }
       break;
     }

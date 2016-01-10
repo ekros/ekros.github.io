@@ -17,6 +17,7 @@ var engine =
   showColisions: true,
   currentLevel: 1,
   me: null,
+  blocked: false,
   level: {
     data: null,
     charSpawnPos: {x: null, y: null},
@@ -214,6 +215,16 @@ var engine =
   },
   run: function()
   {
+    // char movement
+    if (this.me.moveLeft)
+    {
+      this.me.left();
+    }
+    if (this.me.moveRight)
+    {
+      this.me.right();
+    }
+
     for (i in stage.children)
     {
       // ia
@@ -281,8 +292,19 @@ var engine =
     }
     // return this.cObj;
   },
-  talk: function(obj, text, delay)
+  talk: function(obj, text, delay, finalDelay, index)
   {
+    console.log("j: " + index);
+    this.blocked = true;
+    if (index == null)
+    {
+      var index = 0;
+    }
+    else
+    {
+      index++;
+    }
+
     if (text == null)
     {
       obj.text.visible = false;
@@ -290,9 +312,9 @@ var engine =
     }
     else
     {
-      obj.text = new PIXI.Text(text, {dropShadow: true, dropShadowColor: '#BBBBBB'});
-      obj.text.x = obj.position.x + 20;
-      obj.text.y = obj.position.y - 20;
+      obj.text = new PIXI.Text(text[index], {dropShadow: true, dropShadowColor: '#BBBBBB'});
+      obj.text.x = obj.position.x + 35;
+      obj.text.y = obj.position.y - 30;
       obj.text.visible = true;
       obj.textBox = new PIXI.Graphics();
       obj.textBox.lineStyle(2, 0xBBBBBB, 1);
@@ -319,11 +341,20 @@ var engine =
               stage.removeChild(c);
               writeText(origText);
             }
+            else
+            {
+              setTimeout(function() {
+                stage.removeChild(obj.textBox);
+                stage.removeChild(obj.text);
+                engine.talk(obj, text, delay, finalDelay, index);
+              }, finalDelay);
+            }
           }, delay);
         };
         stage.addChild(obj.textBox);
         writeText(origText);
       }
     }
+    this.blocked = false;
   }
 }
