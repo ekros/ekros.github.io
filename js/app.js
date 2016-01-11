@@ -15,6 +15,8 @@ function setup()
   engine.load_char();
 
   engine.load_enemies();
+
+  engine.opening_speech();
 }
 
 // start animating
@@ -24,7 +26,7 @@ function animate() {
 
     engine.me.fall();
     engine.run();
-    
+
     document.getElementById("fps").innerHTML = getFPS();
 
     // render the container

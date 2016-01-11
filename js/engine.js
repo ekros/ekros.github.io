@@ -19,6 +19,7 @@ var engine =
   me: null,
   blocked: false,
   level: {
+    script: null,
     data: null,
     charSpawnPos: {x: null, y: null},
     enemySpawnPos: [],
@@ -39,6 +40,7 @@ var engine =
   {
     console.log("Starting game engine...");
     this.level.data = levels[this.currentLevel];
+    this.level.script = levels_script[this.currentLevel];
     PIXI.loader
         .add('assets/me.png') // add resources
         .add('assets/enemy.png')
@@ -74,6 +76,7 @@ var engine =
   },
   load_level: function()
   {
+    // load level data
     this.level.enemiesKilled = 0;
     console.log("Loading level...");
     var data = this.level.data.layers[0].data;
@@ -159,6 +162,11 @@ var engine =
       }
     }
   },
+  opening_speech: function()
+  {
+    // opening_speech
+    this.talk(this.me, this.level.script.opening_speech, 150, 4000);
+  },
   go_to_level: function(lvl)
   {
     stage.removeChildren();
@@ -166,9 +174,11 @@ var engine =
     console.log("Going to level " + lvl);
     this.currentLevel = lvl;
     this.level.data = levels[this.currentLevel];
+    this.level.script = levels_script[this.currentLevel];
     this.load_level();
     this.load_char();
     this.load_enemies();
+    this.opening_speech();
     // this.load_items();
   },
   next_level: function()
@@ -178,9 +188,11 @@ var engine =
     console.log("Going to next level...");
     this.currentLevel++;
     this.level.data = levels[this.currentLevel];
+    this.level.script = levels_script[this.currentLevel];
     this.load_level();
     this.load_char();
     this.load_enemies();
+    this.opening_speech();
     // this.load_items();
   },
   load_char: function()
