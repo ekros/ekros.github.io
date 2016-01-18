@@ -49,6 +49,18 @@ var enemy = function(obj)
   };
 };
 
+// animatable: it supports animations
+// obj: the object
+// animations: object containing animations
+// {'moving': 'assets/moving.png', 'jump': 'assets/jump.png'}
+var animatable = function(obj, animations)
+{
+  obj.animationSpeed = 0.5;
+  obj.animations = {};
+  obj.animations.moving.push(new PIXI.Sprite(PIXI.utils.TextureCache[animations['moving']]));
+  obj.animations.jump = new PIXI.Sprite(PIXI.utils.TextureCache[animations['jump']]);
+};
+
 // gravity: the object falls and can jump
 var gravity = function(obj)
 {
