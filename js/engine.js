@@ -50,6 +50,7 @@ var engine =
         .add('assets/enemy_spawn.png')
         .add('assets/block_point.png')
         .add('assets/star.png')
+        .add('eros_walk', 'assets/eros_walk.json')
         //.add('assets/tileset_ground.png')
         .load(setup); // call setup when finished
 

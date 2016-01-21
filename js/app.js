@@ -22,6 +22,10 @@ function setup()
 // start animating
 animate();
 function animate() {
+    // Determine seconds elapsed since last frame
+    var currtime = new Date().getTime();
+    var delta = (currtime-lasttime)/1000;
+    
     requestAnimationFrame(animate);
 
     engine.me.fall();

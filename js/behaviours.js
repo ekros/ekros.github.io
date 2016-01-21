@@ -55,10 +55,30 @@ var enemy = function(obj)
 // {'moving': 'assets/moving.png', 'jump': 'assets/jump.png'}
 var animatable = function(obj, animations)
 {
-  obj.animationSpeed = 0.5;
-  obj.animations = {};
-  obj.animations.moving.push(new PIXI.Sprite(PIXI.utils.TextureCache[animations['moving']]));
-  obj.animations.jump = new PIXI.Sprite(PIXI.utils.TextureCache[animations['jump']]);
+  obj.anim = null;
+  obj.FRAMES = [
+  "eros1.png",
+  "eros2.png",
+  "eros3.png",
+  "eros4.png",
+  ];
+  obj.frameindex = null;
+  obj.frametime = null;
+  obj.FRAMERATE = 0.08;
+  obj.VELOCITY = 100;
+
+  obj.animate = function()
+  {
+    frametime -= delta;
+    if (frametime <= 0) {
+      frameindex++;
+      if (frameindex >= FRAMES.length) {
+        frameindex = 0;
+      }
+      monster.texture = PIXI.Texture.fromFrame(FRAMES[frameindex]);
+      frametime = FRAMERATE;
+    }
+  }
 };
 
 // gravity: the object falls and can jump
