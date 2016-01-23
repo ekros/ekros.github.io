@@ -50,6 +50,10 @@ var engine =
         .add('assets/enemy_spawn.png')
         .add('assets/block_point.png')
         .add('assets/star.png')
+        .add('assets/eros1.png')
+        .add('assets/eros2.png')
+        .add('assets/eros3.png')
+        .add('assets/eros4.png')
         //.add('assets/tileset_ground.png')
         .load(setup); // call setup when finished
 
@@ -197,7 +201,9 @@ var engine =
   },
   load_char: function()
   {
-    this.me = new PIXI.Sprite(PIXI.loader.resources['assets/me.png'].texture);
+    this.me = new PIXI.Sprite(PIXI.loader.resources['assets/eros1.png'].texture);
+    this.me.textureIndex = 0;
+    this.me.FRAMES = ["assets/eros1.png", "assets/eros2.png", "assets/eros3.png", "assets/eros4.png"];
 
     character(this.me);
     gravity(this.me);
@@ -227,6 +233,21 @@ var engine =
   },
   run: function()
   {
+    // animations
+    if (this.me.status == RUNNING)
+    {
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES[this.me.textureIndex]].texture);
+      if (this.me.textureIndex < this.me.FRAMES.length - 1)
+      {
+        this.me.textureIndex++;
+      }
+      else
+      {
+        this.me.textureIndex = 0;
+        // this.me.status = NOOP;
+      }
+    }
+
     // char movement
     if (this.me.moveLeft)
     {

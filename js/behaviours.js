@@ -1,4 +1,6 @@
 // behaviours
+const NOOP = 0;
+const RUNNING = 1;
 
 // game character
 var character = function(obj)
@@ -7,6 +9,7 @@ var character = function(obj)
   obj.isCharacter = true;
   obj.blocked = false;
   obj.jumpPower = 18;
+  obj.status = NOOP;
   obj.respawn = function()
   {
     obj.fallSpeed = 0;
@@ -135,8 +138,19 @@ var controllable = function(obj)
       case 70:
         if (obj.text == null)
         {
-          // engine.talk(obj, "Wellcome! Let's move!\nHurry up!!", 200);
           engine.talk(obj, ["Text one", "Text two", "And text three!!\nThis is awesome!!"], 200, 5000);
+        }
+      break;      
+
+      case 71:
+        // engine.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros2.png'].texture);
+        if (engine.me.status == RUNNING)
+        {
+          engine.me.status = NOOP;
+        }
+        else if (engine.me.status == NOOP)
+        {
+          engine.me.status = RUNNING;
         }
       break;
     }
@@ -151,6 +165,11 @@ var controllable = function(obj)
 
       case 39:
         obj.moveRight = false;
+      break;
+
+      case 71:
+        // engine.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros1.png'].texture);
+        // engine.me.status = NOOP;
       break;
     }
   }, false);
