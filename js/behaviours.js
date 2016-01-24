@@ -192,6 +192,14 @@ var ground = function(obj)
   obj.ground = true;
 }
 
+// mobile: the object moves (and then it can collide with other objects)
+var mobile = function(obj)
+{
+  console.log("Mobile behavior enabled");
+
+  obj.mobile = true;
+}
+
 // collectable: the object is collected when touching a character
 var collectable = function(obj)
 {

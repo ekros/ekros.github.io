@@ -217,6 +217,7 @@ var engine =
     character(this.me);
     gravity(this.me);
     controllable(this.me);
+    mobile(this.me);
 
     // move the sprite to the spawn position
     this.me.position.x = engine.level.charSpawnPos.x;
@@ -231,7 +232,7 @@ var engine =
       e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy.png'].texture);
 
       enemy(e);
-      // gravity(e);
+      mobile(e);
 
       // move the sprite to the spawn position
       e.position.x = engine.level.enemySpawnPos[i].x;
@@ -308,62 +309,65 @@ var engine =
 
     for (i in stage.children)
     {
-      // ia
-      if (stage.children[i].isEnemy)
+      if (stage.children[i].mobile)
       {
-        var e = stage.children[i];
-        e.position.x += e.speed;
-        // console.log("blockPoint " + engine.blockPoint[0].x);
-        for (k in engine.level.blockPoint)
+        // ia
+        if (stage.children[i].isEnemy)
         {
-          // console.log("testing X: " + e.position.x + " Y: " + e.position.y + " against: X: " +
-          //  engine.blockPoint[k].x + " Y: " + engine.blockPoint[k].y);
-          if (b.hitTestPoint(engine.level.blockPoint[k], e))
+          var e = stage.children[i];
+          e.position.x += e.speed;
+          // console.log("blockPoint " + engine.blockPoint[0].x);
+          for (k in engine.level.blockPoint)
           {
-            // console.log("enemy hit with block point");
-            e.speed = -e.speed;
+            // console.log("testing X: " + e.position.x + " Y: " + e.position.y + " against: X: " +
+            //  engine.blockPoint[k].x + " Y: " + engine.blockPoint[k].y);
+            if (b.hitTestPoint(engine.level.blockPoint[k], e))
+            {
+              // console.log("enemy hit with block point");
+              e.speed = -e.speed;
+            }
           }
         }
-      }
 
-      for (j in stage.children)
-      {
-        // collision checking
-        if (i != j)
+        for (j in stage.children)
         {
-          var ci = stage.children[i];
-          var cj = stage.children[j];
+          // collision checking
+          if (i != j) // not itself
+          {
+            var ci = stage.children[i];
+            var cj = stage.children[j];
 
-            if (!ci.solid && b.hit(ci, cj, (ci.solid || cj.solid)))
-            {
-              //console.log("colision!!");
-              //this.cObj.push(ci, cj);
-              //console.log("collided objects: ");
-              //console.log(this.cObj);
-
-              // stop fall
-              if (cj.solid)
+              if (!ci.solid && b.hit(ci, cj, (ci.solid || cj.solid)))
               {
-                ci.fallSpeed = 0;
-                ci.jumping = false;
-                cj.fallSpeed = 0;
-                cj.jumping = false;
-                ci.status = STOP_RIGHT;
-              }
+                //console.log("colision!!");
+                //this.cObj.push(ci, cj);
+                //console.log("collided objects: ");
+                //console.log(this.cObj);
 
-              // char - enemy collision
-              if (ci.isCharacter && cj.isEnemy)
-              {
-                cj.collisionAction(ci);
-              }
+                // stop fall
+                if (cj.solid)
+                {
+                  ci.fallSpeed = 0;
+                  ci.jumping = false;
+                  cj.fallSpeed = 0;
+                  cj.jumping = false;
+                  ci.status = STOP_RIGHT;
+                }
 
-              // char - item collision
-              if (ci.isCharacter && cj.isCollectable)
-              {
-                cj.collisionAction(ci);
+                // char - enemy collision
+                if (ci.isCharacter && cj.isEnemy)
+                {
+                  cj.collisionAction(ci);
+                }
+
+                // char - item collision
+                if (ci.isCharacter && cj.isCollectable)
+                {
+                  cj.collisionAction(ci);
+                }
               }
-            }
-        }
+          }
+        }  
       }
     }
     // check win condition
