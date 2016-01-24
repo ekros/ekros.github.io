@@ -10,6 +10,7 @@ var winConditions =
 // collision checking
 var engine =
 {
+  engineCount: 0, // used to decide when to fire some actions
   colision: false,
   cObj: [], // array of collided objects
   viewportX: 50,
@@ -53,7 +54,13 @@ var engine =
         .add('assets/eros1.png')
         .add('assets/eros2.png')
         .add('assets/eros3.png')
-        .add('assets/eros4.png')
+        .add('assets/eros4.png')        
+        .add('assets/eros1d.png')
+        .add('assets/eros2d.png')
+        .add('assets/eros3d.png')
+        .add('assets/eros4d.png')
+        .add('assets/eros_jump.png')
+        .add('assets/eros_jumpd.png')
         //.add('assets/tileset_ground.png')
         .load(setup); // call setup when finished
 
@@ -203,7 +210,9 @@ var engine =
   {
     this.me = new PIXI.Sprite(PIXI.loader.resources['assets/eros1.png'].texture);
     this.me.textureIndex = 0;
-    this.me.FRAMES = ["assets/eros1.png", "assets/eros2.png", "assets/eros3.png", "assets/eros4.png"];
+    this.me.FRAMES = {};
+    this.me.FRAMES.right = ["assets/eros1d.png", "assets/eros2d.png", "assets/eros3d.png", "assets/eros4d.png"];
+    this.me.FRAMES.left = ["assets/eros1.png", "assets/eros2.png", "assets/eros3.png", "assets/eros4.png"];
 
     character(this.me);
     gravity(this.me);
@@ -234,10 +243,10 @@ var engine =
   run: function()
   {
     // animations
-    if (this.me.status == RUNNING)
+    if (this.me.status == RUNNING_LEFT)
     {
-      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES[this.me.textureIndex]].texture);
-      if (this.me.textureIndex < this.me.FRAMES.length - 1)
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
+      if (this.me.textureIndex < this.me.FRAMES.left.length - 1)
       {
         this.me.textureIndex++;
       }
@@ -246,6 +255,43 @@ var engine =
         this.me.textureIndex = 0;
         // this.me.status = NOOP;
       }
+    }
+    else if (this.me.status == RUNNING_RIGHT)
+    {
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
+      if (this.me.textureIndex < this.me.FRAMES.right.length - 1)
+      {
+        this.me.textureIndex++;
+      }
+      else
+      {
+        this.me.textureIndex = 0;
+        // this.me.status = NOOP;
+      }
+    }
+    else if (this.me.status == STOP_LEFT)
+    {
+      console.log("STOP_LEFT");
+      this.me.textureIndex = 0;
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
+      this.me.status = NOOP_LEFT;
+    }    
+    else if (this.me.status == STOP_RIGHT)
+    {
+      console.log("STOP_RIGHT");
+//      this.me.textureIndex = 0;
+//      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
+//      this.me.status = NOOP_RIGHT;
+    }
+    else if (this.me.status == JUMP_LEFT)
+    {
+      console.log("JUMP_LEFT");
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jump.png'].texture);
+    }    
+    else if (this.me.status == JUMP_RIGHT)
+    {
+      console.log("JUMP_RIGHT");
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jumpd.png'].texture);
     }
 
     // char movement
@@ -257,6 +303,8 @@ var engine =
     {
       this.me.right();
     }
+
+    // checks: blockpoints, collisions
 
     for (i in stage.children)
     {
@@ -300,6 +348,7 @@ var engine =
                 ci.jumping = false;
                 cj.fallSpeed = 0;
                 cj.jumping = false;
+                ci.status = STOP_RIGHT;
               }
 
               // char - enemy collision
@@ -324,6 +373,7 @@ var engine =
       engine.next_level();
     }
     // return this.cObj;
+    this.engineCount++;
   },
   talk: function(obj, text, delay, finalDelay, index)
   {

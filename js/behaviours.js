@@ -1,6 +1,12 @@
 // behaviours
-const NOOP = 0;
-const RUNNING = 1;
+const NOOP_LEFT = 0;
+const NOOP_RIGHT = 1;
+const RUNNING_LEFT = 2;
+const RUNNING_RIGHT = 3;
+const STOP_LEFT = 4;
+const STOP_RIGHT = 5;
+const JUMP_LEFT = 6;
+const JUMP_RIGHT = 7;
 
 // game character
 var character = function(obj)
@@ -8,8 +14,8 @@ var character = function(obj)
   console.log("Character behavior enabled.");
   obj.isCharacter = true;
   obj.blocked = false;
-  obj.jumpPower = 18;
-  obj.status = NOOP;
+  obj.jumpPower = 30;
+  obj.status = NOOP_RIGHT;
   obj.respawn = function()
   {
     obj.fallSpeed = 0;
@@ -56,7 +62,7 @@ var enemy = function(obj)
 var gravity = function(obj)
 {
   // console.log("Gravity behaviour enabled.");
-  obj.acc = 1;
+  obj.acc = 3;
 
   obj.fallSpeed = 0;
   obj.jumping = false;
@@ -115,6 +121,7 @@ var controllable = function(obj)
     switch (event.keyCode) {
       case 37: // Left
         obj.moveLeft = true;
+        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = RUNNING_LEFT;
       break;
 
       case 38: // Up
@@ -123,6 +130,7 @@ var controllable = function(obj)
 
       case 39: // Right
         obj.moveRight = true;
+        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = RUNNING_RIGHT;
       break;
 
       case 40: // Down
@@ -132,6 +140,8 @@ var controllable = function(obj)
       case 32: // Space
         if (obj.hasGravity()) {
           obj.jump(obj.jumpPower);
+          if (engine.me.status == NOOP_LEFT) engine.me.status = JUMP_LEFT;
+          if (engine.me.status == NOOP_RIGHT) engine.me.status = JUMP_RIGHT;
         }
       break;
 
@@ -140,31 +150,22 @@ var controllable = function(obj)
         {
           engine.talk(obj, ["Text one", "Text two", "And text three!!\nThis is awesome!!"], 200, 5000);
         }
-      break;      
-
-      case 71:
-        // engine.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros2.png'].texture);
-        if (engine.me.status == RUNNING)
-        {
-          engine.me.status = NOOP;
-        }
-        else if (engine.me.status == NOOP)
-        {
-          engine.me.status = RUNNING;
-        }
       break;
     }
   }, false);
 
   window.addEventListener('keyup', function(event) {
-    console.log(event.keyCode + " key up!");
     switch (event.keyCode) {
       case 37:
+        console.log(event.keyCode + " key up left!");
         obj.moveLeft = false;
+        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = STOP_LEFT;
       break;
 
       case 39:
+        console.log(event.keyCode + " key up right!");
         obj.moveRight = false;
+        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = STOP_RIGHT;
       break;
 
       case 71:

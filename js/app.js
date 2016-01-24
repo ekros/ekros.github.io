@@ -16,7 +16,7 @@ function setup()
 
   engine.load_enemies();
 
-  engine.opening_speech();
+  //engine.opening_speech();
 }
 
 // start animating
