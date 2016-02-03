@@ -44,7 +44,7 @@ var engine =
     this.level.script = levels_script[this.currentLevel];
     PIXI.loader
         .add('assets/me.png') // add resources
-        .add('assets/enemy.png')
+        .add('assets/enemy1.png')
         .add('assets/ground1.png')
         .add('assets/ground2.png')
         .add('assets/char_spawn.png')
@@ -229,7 +229,11 @@ var engine =
   {
     for (i in engine.level.enemySpawnPos)
     {
-      e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy.png'].texture);
+      e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy1.png'].texture);
+      e.textureIndex = 0;
+      e.FRAMES = {};
+      e.FRAMES.right = ["assets/enemy1.png", "assets/enemy2.png", "assets/enemy3.png", "assets/enemy4.png"];
+      e.FRAMES.left = ["assets/enemy1.png", "assets/enemy2.png", "assets/enemy3.png", "assets/enemy4.png"];
 
       enemy(e);
       mobile(e);
@@ -305,16 +309,32 @@ var engine =
       this.me.right();
     }
 
-    // checks: blockpoints, collisions
+    // checks: blockpoints, collisions, other animations
 
     for (i in stage.children)
     {
-      if (stage.children[i].mobile)
+      var child = stage.children[i];
+
+      if (child.isEnemy)
+      {
+        child.texture = new PIXI.Texture(PIXI.loader.resources[child.FRAMES.left[child.textureIndex]].texture);
+        if (child.textureIndex < child.FRAMES.left.length - 1)
+        {
+          child.textureIndex++;
+        }
+        else
+        {
+          child.textureIndex = 0;
+          // this.me.status = NOOP;
+        }
+      }
+
+      if (child.mobile)
       {
         // ia
-        if (stage.children[i].isEnemy)
+        if (child.isEnemy)
         {
-          var e = stage.children[i];
+          var e = child;
           e.position.x += e.speed;
           // console.log("blockPoint " + engine.blockPoint[0].x);
           for (k in engine.level.blockPoint)
