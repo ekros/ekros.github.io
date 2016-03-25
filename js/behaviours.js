@@ -140,6 +140,7 @@ var controllable = function(obj)
       break;
 
       case 32: // Space
+        event.preventDefault();
         if (obj.hasGravity()) {
           obj.jump(obj.jumpPower);
           if (engine.me.status == NOOP_LEFT) engine.me.status = JUMP_LEFT;

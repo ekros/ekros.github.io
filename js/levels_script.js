@@ -17,8 +17,18 @@ var levels_script = [
 },
 {
   "opening_speech":[
-    "Hi! This is the second level!",
-    "Ready!"
+    "Hi again!"
+  ],
+  "ending_speech":[
+    "Well done!"
+  ]
+},
+{
+  "opening_speech":[
+    "It is almost done. Ready!"
+  ],
+  "ending_speech":[
+    "Cool!"
   ]
 }
 ]
