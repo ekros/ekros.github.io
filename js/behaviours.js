@@ -38,7 +38,7 @@ var enemy = function(obj)
 {
   console.log("Enemy behavior enabled.");
   obj.isEnemy = true;
-  obj.speed = 1;
+  obj.speed = 2;
 
   // action when a character collision is detected
   obj.collisionAction = function(c)
@@ -106,13 +106,15 @@ var controllable = function(obj)
 
   obj.left = function()
   {
-    // if (!obj.isBlocked) obj.position.x -= speed;
+    console.log("engine.me.blocked " + engine.me.blocked);
+    console.log("obj.blocked " + obj.blocked);
+    // if (!engine.me.blocked) obj.position.x -= speed;
     obj.position.x -= speed;
   };
 
   obj.right = function()
   {
-    // if (!obj.isBlocked) obj.position.x += speed;
+    // if (!engine.me.blocked) obj.position.x += speed;
     obj.position.x += speed;
   };
 

@@ -45,6 +45,9 @@ var engine =
     PIXI.loader
         .add('assets/me.png') // add resources
         .add('assets/enemy1.png')
+        .add('assets/enemy2.png')
+        .add('assets/enemy3.png')
+        .add('assets/enemy4.png')
         .add('assets/ground1.png')
         .add('assets/ground2.png')
         .add('assets/char_spawn.png')
@@ -176,7 +179,12 @@ var engine =
   opening_speech: function()
   {
     // opening_speech
-    this.talk(this.me, this.level.script.opening_speech, 150, 4000);
+    this.talk(this.me, this.level.script.opening_speech, 30, 1000);
+  },
+  ending_speech: function()
+  {
+    // ending speech
+    this.talk(this.me, this.level.script.ending_speech, 30, 1000, null, true);
   },
   go_to_level: function(lvl)
   {
@@ -216,7 +224,7 @@ var engine =
 
     character(this.me);
     gravity(this.me);
-    controllable(this.me);
+    //controllable(this.me);
     mobile(this.me);
 
     // move the sprite to the spawn position
@@ -393,16 +401,17 @@ var engine =
     // check win condition
     if (this.level.enemiesKilled == this.level.enemySpawnPos.length)
     {
-      this.talk(this.me, "Well done!");
-      engine.next_level();
+      this.level.enemiesKilled = 0;
+      this.ending_speech();
+      //engine.next_level();
     }
     // return this.cObj;
     this.engineCount++;
   },
-  talk: function(obj, text, delay, finalDelay, index)
+  talk: function(obj, text, delay, finalDelay, index, isEndingSpeech)
   {
     console.log("j: " + index);
-    this.blocked = true;
+    obj.blocked = true;
     if (index == null)
     {
       var index = 0;
@@ -420,8 +429,8 @@ var engine =
     else
     {
       obj.text = new PIXI.Text(text[index], {dropShadow: true, dropShadowColor: '#BBBBBB'});
-      obj.text.x = obj.position.x + 35;
-      obj.text.y = obj.position.y - 30;
+      obj.text.x = obj.position.x + 50;
+      obj.text.y = obj.position.y - 50;
       obj.text.visible = true;
       obj.textBox = new PIXI.Graphics();
       obj.textBox.lineStyle(2, 0xBBBBBB, 1);
@@ -453,8 +462,26 @@ var engine =
               setTimeout(function() {
                 stage.removeChild(obj.textBox);
                 stage.removeChild(obj.text);
-                engine.talk(obj, text, delay, finalDelay, index);
+                if (isEndingSpeech)
+                {
+                  engine.talk(obj, text, delay, finalDelay, index, true);
+                }
+                else
+                {
+                  engine.talk(obj, text, delay, finalDelay, index);
+                }
               }, finalDelay);
+              // this.blocked = false;
+              // console.log(text.length);
+              if (index == text.length - 1)
+              {
+                console.log("blocked");
+                console.log(engine.me.blocked);
+                engine.me.blocked = false;
+                obj.blocked = false;
+                console.log(engine.me.blocked);
+                engine.talkCallback(isEndingSpeech);
+              }
             }
           }, delay);
         };
@@ -462,6 +489,16 @@ var engine =
         writeText(origText);
       }
     }
-    this.blocked = false;
+  },
+  talkCallback: function(isEndingSpeech) 
+  {
+    if (isEndingSpeech)
+    {
+      engine.next_level();
+    }
+    else
+    {
+      controllable(engine.me);
+    }
   }
 }
