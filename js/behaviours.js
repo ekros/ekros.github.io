@@ -49,6 +49,7 @@ var enemy = function(obj)
       c.jump(c.jumpPower/2);
       obj.position.y = 2000;
       engine.level.enemiesKilled++;
+      engine.talk(c, new Array(engine.level.script.resume_pieces[engine.level.enemiesKilled - 1]), 10, 1000);
     }
     else
     {
@@ -215,4 +216,14 @@ var collectable = function(obj)
     c.items++;
     stage.removeChild(obj);
   };
+};
+
+// jump_under: an action is fired when the character jumps under the object (in a Mario Bros. way)
+var jump_under = function(obj, action)
+{
+  console.log("Jump under behavior enabled");
+
+  obj.jump_under = true;
+
+  obj.jump_under_action = action;
 };

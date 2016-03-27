@@ -64,6 +64,7 @@ var engine =
         .add('assets/eros4d.png')
         .add('assets/eros_jump.png')
         .add('assets/eros_jumpd.png')
+        .add('assets/download.png')
         //.add('assets/tileset_ground.png')
         .load(setup); // call setup when finished
 
@@ -382,6 +383,12 @@ var engine =
                   ci.status = STOP_RIGHT;
                 }
 
+                // impact with a "jump_under" block
+                if (cj.jump_under && cj.y < ci.y)
+                {
+                  cj.jump_under_action();
+                }
+
                 // char - enemy collision
                 if (ci.isCharacter && cj.isEnemy)
                 {
@@ -494,7 +501,21 @@ var engine =
   {
     if (isEndingSpeech)
     {
-      engine.next_level();
+      if (this.currentLevel == 3)
+      {
+          var b1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/download.png']);
+          solid(b1);
+          jump_under(b1, function() {
+            location.href = "assets/Eric_resume_gamified.pdf";
+          });
+          b1.position.x = this.me.x;
+          b1.position.y = this.me.y - 80;
+          stage.addChild(b1);
+      }
+      else
+      {
+        engine.next_level();
+      }
     }
     else
     {
