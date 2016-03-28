@@ -13,6 +13,14 @@
         }],
  "nextobjectid":1,
  "orientation":"orthogonal",
+ "properties":
+    {
+     "background":"background3.png"
+    },
+ "propertytypes":
+    {
+     "background":"string"
+    },
  "renderorder":"left-up",
  "tileheight":32,
  "tilesets":[

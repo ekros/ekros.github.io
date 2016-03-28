@@ -107,6 +107,13 @@ var engine =
     var aspect = this.level.data.tilesets[0].tileCount / this.level.data.tilesets[0].columns;
     var cols = this.level.data.tilesets[0].columns;
 
+    // load background
+    console.log("Loading background: " + this.level.data.properties.background);
+    var background = new PIXI.Sprite.fromImage('assets/' + this.level.data.properties.background);
+    background.position.x = 0;
+    background.position.y = 0;
+    stage.addChild(background);
+    
     // // load tileset
     // var rectangles = [];
     // for (var i = 0; i < cols; i++)
@@ -415,7 +422,7 @@ var engine =
     // return this.cObj;
     this.engineCount++;
   },
-  talk: function(obj, text, delay, finalDelay, index, isEndingSpeech)
+  talk: function(obj, text, delay, finalDelay, index, isEndingSpeech, inplace)
   {
     console.log("j: " + index);
     obj.blocked = true;
@@ -436,8 +443,16 @@ var engine =
     else
     {
       obj.text = new PIXI.Text(text[index], {dropShadow: true, dropShadowColor: '#BBBBBB'});
-      obj.text.x = obj.position.x + 50;
-      obj.text.y = obj.position.y - 50;
+      if (inplace)
+      {
+        obj.text.x = obj.position.x + 50;
+        obj.text.y = obj.position.y - 50;
+      }
+      else
+      {
+        obj.text.x = 50;
+        obj.text.y = 20;
+      }
       obj.text.visible = true;
       obj.textBox = new PIXI.Graphics();
       obj.textBox.lineStyle(2, 0xBBBBBB, 1);

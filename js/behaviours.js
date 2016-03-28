@@ -49,7 +49,11 @@ var enemy = function(obj)
       c.jump(c.jumpPower/2);
       obj.position.y = 2000;
       engine.level.enemiesKilled++;
-      engine.talk(c, new Array(engine.level.script.resume_pieces[engine.level.enemiesKilled - 1]), 10, 1000);
+      var text = engine.level.script.resume_pieces[engine.level.enemiesKilled - 1];
+      if (text != null && text.length > 0)
+      {
+        engine.talk(c, new Array(text), 10, 1000, null, null, true);
+      }
     }
     else
     {
@@ -102,7 +106,7 @@ var gravity = function(obj)
 var controllable = function(obj)
 {
   console.log("Controllable behaviour enabled.");
-  var speed = 5;
+  var speed = 3;
   var items = 0; // collected items
 
   obj.left = function()
