@@ -38,7 +38,7 @@ var enemy = function(obj)
 {
   console.log("Enemy behavior enabled.");
   obj.isEnemy = true;
-  obj.speed = 1.5;
+  obj.speed = 1;
 
   // action when a character collision is detected
   obj.collisionAction = function(c)
@@ -52,7 +52,7 @@ var enemy = function(obj)
       var text = engine.level.script.resume_pieces[engine.level.enemiesKilled - 1];
       if (text != null && text.length > 0)
       {
-        engine.talk(c, new Array(text), 10, 1000, null, null, true);
+        engine.talk(c, new Array(text), 50, 1000, null, null, true);
       }
     }
     else
@@ -106,7 +106,7 @@ var gravity = function(obj)
 var controllable = function(obj)
 {
   console.log("Controllable behaviour enabled.");
-  var speed = 3;
+  var speed = 2;
   var items = 0; // collected items
 
   obj.left = function()
