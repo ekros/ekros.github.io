@@ -187,12 +187,12 @@ var engine =
   opening_speech: function()
   {
     // opening_speech
-    this.talk(this.me, this.level.script.opening_speech, 100, 1000);
+    this.talk(this.me, this.level.script.opening_speech, 200, 1000);
   },
   ending_speech: function()
   {
     // ending speech
-    this.talk(this.me, this.level.script.ending_speech, 100, 1000, null, true);
+    this.talk(this.me, this.level.script.ending_speech, 200, 1000, null, true);
   },
   go_to_level: function(lvl)
   {

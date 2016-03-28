@@ -67,7 +67,7 @@ var enemy = function(obj)
 var gravity = function(obj)
 {
   // console.log("Gravity behaviour enabled.");
-  obj.acc = 3;
+  obj.acc = 2;
 
   obj.fallSpeed = 0;
   obj.jumping = false;
@@ -106,7 +106,7 @@ var gravity = function(obj)
 var controllable = function(obj)
 {
   console.log("Controllable behaviour enabled.");
-  var speed = 2;
+  var speed = 2.5;
   var items = 0; // collected items
 
   obj.left = function()
