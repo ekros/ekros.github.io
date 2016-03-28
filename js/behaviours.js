@@ -106,7 +106,7 @@ var gravity = function(obj)
 var controllable = function(obj)
 {
   console.log("Controllable behaviour enabled.");
-  var speed = 3;
+  var speed = 4;
   var items = 0; // collected items
 
   obj.left = function()
