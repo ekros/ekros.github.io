@@ -10,6 +10,7 @@ var winConditions =
 // collision checking
 var engine =
 {
+  engineCount: 0, // used to decide when to fire some actions
   colision: false,
   cObj: [], // array of collided objects
   viewportX: 50,
@@ -43,14 +44,27 @@ var engine =
     this.level.script = levels_script[this.currentLevel];
     PIXI.loader
         .add('assets/me.png') // add resources
-        .add('assets/enemy.png')
+        .add('assets/enemy1.png')
+        .add('assets/enemy2.png')
+        .add('assets/enemy3.png')
+        .add('assets/enemy4.png')
         .add('assets/ground1.png')
         .add('assets/ground2.png')
         .add('assets/char_spawn.png')
         .add('assets/enemy_spawn.png')
         .add('assets/block_point.png')
         .add('assets/star.png')
-        .add('eros_walk', 'assets/eros_walk.json')
+        .add('assets/eros1.png')
+        .add('assets/eros2.png')
+        .add('assets/eros3.png')
+        .add('assets/eros4.png')        
+        .add('assets/eros1d.png')
+        .add('assets/eros2d.png')
+        .add('assets/eros3d.png')
+        .add('assets/eros4d.png')
+        .add('assets/eros_jump.png')
+        .add('assets/eros_jumpd.png')
+        .add('assets/download.png')
         //.add('assets/tileset_ground.png')
         .load(setup); // call setup when finished
 
@@ -93,6 +107,13 @@ var engine =
     var aspect = this.level.data.tilesets[0].tileCount / this.level.data.tilesets[0].columns;
     var cols = this.level.data.tilesets[0].columns;
 
+    // load background
+    console.log("Loading background: " + this.level.data.properties.background);
+    var background = new PIXI.Sprite.fromImage('assets/' + this.level.data.properties.background);
+    background.position.x = 0;
+    background.position.y = 0;
+    stage.addChild(background);
+    
     // // load tileset
     // var rectangles = [];
     // for (var i = 0; i < cols; i++)
@@ -166,7 +187,12 @@ var engine =
   opening_speech: function()
   {
     // opening_speech
-    this.talk(this.me, this.level.script.opening_speech, 150, 4000);
+    this.talk(this.me, this.level.script.opening_speech, 200, 1000);
+  },
+  ending_speech: function()
+  {
+    // ending speech
+    this.talk(this.me, this.level.script.ending_speech, 200, 1000, null, true);
   },
   go_to_level: function(lvl)
   {
@@ -198,11 +224,16 @@ var engine =
   },
   load_char: function()
   {
-    this.me = new PIXI.Sprite(PIXI.loader.resources['assets/me.png'].texture);
+    this.me = new PIXI.Sprite(PIXI.loader.resources['assets/eros1.png'].texture);
+    this.me.textureIndex = 0;
+    this.me.FRAMES = {};
+    this.me.FRAMES.right = ["assets/eros1d.png", "assets/eros2d.png", "assets/eros3d.png", "assets/eros4d.png"];
+    this.me.FRAMES.left = ["assets/eros1.png", "assets/eros2.png", "assets/eros3.png", "assets/eros4.png"];
 
     character(this.me);
     gravity(this.me);
-    controllable(this.me);
+    //controllable(this.me);
+    mobile(this.me);
 
     // move the sprite to the spawn position
     this.me.position.x = engine.level.charSpawnPos.x;
@@ -214,10 +245,14 @@ var engine =
   {
     for (i in engine.level.enemySpawnPos)
     {
-      e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy.png'].texture);
+      e = new PIXI.Sprite(PIXI.loader.resources['assets/enemy1.png'].texture);
+      e.textureIndex = 0;
+      e.FRAMES = {};
+      e.FRAMES.right = ["assets/enemy1.png", "assets/enemy2.png", "assets/enemy3.png", "assets/enemy4.png"];
+      e.FRAMES.left = ["assets/enemy1.png", "assets/enemy2.png", "assets/enemy3.png", "assets/enemy4.png"];
 
       enemy(e);
-      // gravity(e);
+      mobile(e);
 
       // move the sprite to the spawn position
       e.position.x = engine.level.enemySpawnPos[i].x;
@@ -228,6 +263,58 @@ var engine =
   },
   run: function()
   {
+    // animations
+    if (this.me.status == RUNNING_LEFT)
+    {
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
+      if (this.me.textureIndex < this.me.FRAMES.left.length - 1)
+      {
+        this.me.textureIndex++;
+      }
+      else
+      {
+        this.me.textureIndex = 0;
+        // this.me.status = NOOP;
+      }
+    }
+    else if (this.me.status == RUNNING_RIGHT)
+    {
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
+      if (this.me.textureIndex < this.me.FRAMES.right.length - 1)
+      {
+        this.me.textureIndex++;
+      }
+      else
+      {
+        this.me.textureIndex = 0;
+        // this.me.status = NOOP;
+      }
+    }
+    else if (this.me.status == STOP_LEFT)
+    {
+      console.log("STOP_LEFT");
+      this.me.textureIndex = 0;
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
+      this.me.status = NOOP_LEFT;
+    }    
+    else if (this.me.status == STOP_RIGHT)
+    {
+      console.log("STOP_RIGHT");
+//      this.me.textureIndex = 0;
+//      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
+//      this.me.status = NOOP_RIGHT;
+    }
+    else if (this.me.status == JUMP_LEFT)
+    {
+      console.log("JUMP_LEFT");
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jump.png'].texture);
+    }    
+    else if (this.me.status == JUMP_RIGHT)
+    {
+      console.log("JUMP_RIGHT");
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jumpd.png'].texture);
+    }
+
     // char movement
     if (this.me.moveLeft)
     {
@@ -238,77 +325,107 @@ var engine =
       this.me.right();
     }
 
+    // checks: blockpoints, collisions, other animations
+
     for (i in stage.children)
     {
-      // ia
-      if (stage.children[i].isEnemy)
+      var child = stage.children[i];
+
+      if (child.isEnemy)
       {
-        var e = stage.children[i];
-        e.position.x += e.speed;
-        // console.log("blockPoint " + engine.blockPoint[0].x);
-        for (k in engine.level.blockPoint)
+        child.texture = new PIXI.Texture(PIXI.loader.resources[child.FRAMES.left[child.textureIndex]].texture);
+        if (child.textureIndex < child.FRAMES.left.length - 1)
         {
-          // console.log("testing X: " + e.position.x + " Y: " + e.position.y + " against: X: " +
-          //  engine.blockPoint[k].x + " Y: " + engine.blockPoint[k].y);
-          if (b.hitTestPoint(engine.level.blockPoint[k], e))
-          {
-            // console.log("enemy hit with block point");
-            e.speed = -e.speed;
-          }
+          child.textureIndex++;
+        }
+        else
+        {
+          child.textureIndex = 0;
+          // this.me.status = NOOP;
         }
       }
 
-      for (j in stage.children)
+      if (child.mobile)
       {
-        // collision checking
-        if (i != j)
+        // ia
+        if (child.isEnemy)
         {
-          var ci = stage.children[i];
-          var cj = stage.children[j];
-
-            if (!ci.solid && b.hit(ci, cj, (ci.solid || cj.solid)))
+          var e = child;
+          e.position.x += e.speed;
+          // console.log("blockPoint " + engine.blockPoint[0].x);
+          for (k in engine.level.blockPoint)
+          {
+            // console.log("testing X: " + e.position.x + " Y: " + e.position.y + " against: X: " +
+            //  engine.blockPoint[k].x + " Y: " + engine.blockPoint[k].y);
+            if (b.hitTestPoint(engine.level.blockPoint[k], e))
             {
-              //console.log("colision!!");
-              //this.cObj.push(ci, cj);
-              //console.log("collided objects: ");
-              //console.log(this.cObj);
-
-              // stop fall
-              if (cj.solid)
-              {
-                ci.fallSpeed = 0;
-                ci.jumping = false;
-                cj.fallSpeed = 0;
-                cj.jumping = false;
-              }
-
-              // char - enemy collision
-              if (ci.isCharacter && cj.isEnemy)
-              {
-                cj.collisionAction(ci);
-              }
-
-              // char - item collision
-              if (ci.isCharacter && cj.isCollectable)
-              {
-                cj.collisionAction(ci);
-              }
+              // console.log("enemy hit with block point");
+              e.speed = -e.speed;
             }
+          }
         }
+
+        for (j in stage.children)
+        {
+          // collision checking
+          if (i != j) // not itself
+          {
+            var ci = stage.children[i];
+            var cj = stage.children[j];
+
+              if (!ci.solid && b.hit(ci, cj, (ci.solid || cj.solid)))
+              {
+                //console.log("colision!!");
+                //this.cObj.push(ci, cj);
+                //console.log("collided objects: ");
+                //console.log(this.cObj);
+
+                // stop fall
+                if (cj.solid)
+                {
+                  ci.fallSpeed = 0;
+                  ci.jumping = false;
+                  cj.fallSpeed = 0;
+                  cj.jumping = false;
+                  ci.status = STOP_RIGHT;
+                }
+
+                // impact with a "jump_under" block
+                if (cj.jump_under && cj.y < ci.y)
+                {
+                  cj.jump_under_action();
+                }
+
+                // char - enemy collision
+                if (ci.isCharacter && cj.isEnemy)
+                {
+                  cj.collisionAction(ci);
+                }
+
+                // char - item collision
+                if (ci.isCharacter && cj.isCollectable)
+                {
+                  cj.collisionAction(ci);
+                }
+              }
+          }
+        }  
       }
     }
     // check win condition
     if (this.level.enemiesKilled == this.level.enemySpawnPos.length)
     {
-      this.talk(this.me, "Well done!");
-      engine.next_level();
+      this.level.enemiesKilled = 0;
+      this.ending_speech();
+      //engine.next_level();
     }
     // return this.cObj;
+    this.engineCount++;
   },
-  talk: function(obj, text, delay, finalDelay, index)
+  talk: function(obj, text, delay, finalDelay, index, isEndingSpeech, inplace)
   {
     console.log("j: " + index);
-    this.blocked = true;
+    obj.blocked = true;
     if (index == null)
     {
       var index = 0;
@@ -326,8 +443,16 @@ var engine =
     else
     {
       obj.text = new PIXI.Text(text[index], {dropShadow: true, dropShadowColor: '#BBBBBB'});
-      obj.text.x = obj.position.x + 35;
-      obj.text.y = obj.position.y - 30;
+      if (inplace)
+      {
+        obj.text.x = obj.position.x + 50;
+        obj.text.y = obj.position.y - 50;
+      }
+      else
+      {
+        obj.text.x = 50;
+        obj.text.y = 20;
+      }
       obj.text.visible = true;
       obj.textBox = new PIXI.Graphics();
       obj.textBox.lineStyle(2, 0xBBBBBB, 1);
@@ -359,8 +484,26 @@ var engine =
               setTimeout(function() {
                 stage.removeChild(obj.textBox);
                 stage.removeChild(obj.text);
-                engine.talk(obj, text, delay, finalDelay, index);
+                if (isEndingSpeech)
+                {
+                  engine.talk(obj, text, delay, finalDelay, index, true);
+                }
+                else
+                {
+                  engine.talk(obj, text, delay, finalDelay, index);
+                }
               }, finalDelay);
+              // this.blocked = false;
+              // console.log(text.length);
+              if (index == text.length - 1)
+              {
+                console.log("blocked");
+                console.log(engine.me.blocked);
+                engine.me.blocked = false;
+                obj.blocked = false;
+                console.log(engine.me.blocked);
+                engine.talkCallback(isEndingSpeech);
+              }
             }
           }, delay);
         };
@@ -368,6 +511,30 @@ var engine =
         writeText(origText);
       }
     }
-    this.blocked = false;
+  },
+  talkCallback: function(isEndingSpeech) 
+  {
+    if (isEndingSpeech)
+    {
+      if (this.currentLevel == 3)
+      {
+          var b1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/download.png']);
+          solid(b1);
+          jump_under(b1, function() {
+            location.href = "assets/Eric_resume_gamified.pdf";
+          });
+          b1.position.x = this.me.x;
+          b1.position.y = this.me.y - 80;
+          stage.addChild(b1);
+      }
+      else
+      {
+        engine.next_level();
+      }
+    }
+    else
+    {
+      controllable(engine.me);
+    }
   }
 }
