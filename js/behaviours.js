@@ -38,7 +38,7 @@ var enemy = function(obj)
 {
   console.log("Enemy behavior enabled.");
   obj.isEnemy = true;
-  obj.speed = 2;
+  obj.speed = 1.5;
 
   // action when a character collision is detected
   obj.collisionAction = function(c)
@@ -106,7 +106,7 @@ var gravity = function(obj)
 var controllable = function(obj)
 {
   console.log("Controllable behaviour enabled.");
-  var speed = 4;
+  var speed = 3;
   var items = 0; // collected items
 
   obj.left = function()
