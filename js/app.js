@@ -7,7 +7,7 @@ var stage = new PIXI.Container();
 
 if (smallScreen())
 {
-  document.write("In order to enjoy this experience you need a computer or laptop with a keyboard.");
+  alert("In order to enjoy this experience you need a computer or laptop with a keyboard.");
 }
 else
 {
