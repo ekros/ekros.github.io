@@ -5,34 +5,46 @@ document.body.appendChild(renderer.view);
 // create the root of the scene graph
 var stage = new PIXI.Container();
 
-engine.start(); // start game engine
-
-// scene setup
-function setup()
+if (smallScreen())
 {
-  engine.load_level();
+  document.write("In order to enjoy this experience you need a computer or laptop with a keyboard.");
+}
+else
+{
+  engine.start(); // start game engine
 
-  engine.load_char();
+  // scene setup
+  function setup()
+  {
+    engine.load_level();
 
-  engine.load_enemies();
+    engine.load_char();
 
-  engine.opening_speech();
+    engine.load_enemies();
+
+    engine.opening_speech();
+  }
+
+  // start animating
+  animate();
+  function animate() {
+      // Determine seconds elapsed since last frame
+      // var currtime = new Date().getTime();
+      // var delta = (currtime-lasttime)/1000;
+      
+      requestAnimationFrame(animate);
+
+      engine.me.fall();
+      engine.run();
+
+      // document.getElementById("fps").innerHTML = getFPS();
+
+      // render the container
+      renderer.render(stage);
+  }  
 }
 
-// start animating
-animate();
-function animate() {
-    // Determine seconds elapsed since last frame
-    // var currtime = new Date().getTime();
-    // var delta = (currtime-lasttime)/1000;
-    
-    requestAnimationFrame(animate);
-
-    engine.me.fall();
-    engine.run();
-
-    // document.getElementById("fps").innerHTML = getFPS();
-
-    // render the container
-    renderer.render(stage);
+function smallScreen()
+{
+  return (window.innerWidth < 1128);
 }
