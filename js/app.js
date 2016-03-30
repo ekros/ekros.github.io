@@ -1,16 +1,16 @@
-b = new Bump(PIXI); // bump, the collision detector
-var renderer = PIXI.autoDetectRenderer(1024, 768, {backgroundColor : 0xfbefc3});
-document.body.appendChild(renderer.view);
-
-// create the root of the scene graph
-var stage = new PIXI.Container();
-
 if (smallScreen())
 {
   alert("In order to enjoy this experience you need a computer or laptop with a keyboard.");
 }
 else
 {
+  b = new Bump(PIXI); // bump, the collision detector
+  var renderer = PIXI.autoDetectRenderer(1024, 768, {backgroundColor : 0xfbefc3});
+  document.body.appendChild(renderer.view);
+
+  // create the root of the scene graph
+  var stage = new PIXI.Container();
+
   engine.start(); // start game engine
 
   // scene setup
