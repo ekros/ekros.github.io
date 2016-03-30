@@ -13,21 +13,29 @@ else
 
   engine.start(); // start game engine
 
-  // scene setup
-  function setup()
-  {
-    engine.load_level();
-
-    engine.load_char();
-
-    engine.load_enemies();
-
-    engine.opening_speech();
-  }
 
   // start animating
   animate();
-  function animate() {
+}
+
+function smallScreen()
+{
+  return (window.innerWidth < 1128);
+}
+
+// scene setup
+function setup()
+{
+  engine.load_level();
+
+  engine.load_char();
+
+  engine.load_enemies();
+
+  engine.opening_speech();
+}
+  
+function animate() {
       // Determine seconds elapsed since last frame
       // var currtime = new Date().getTime();
       // var delta = (currtime-lasttime)/1000;
@@ -42,9 +50,3 @@ else
       // render the container
       renderer.render(stage);
   }  
-}
-
-function smallScreen()
-{
-  return (window.innerWidth < 1128);
-}
