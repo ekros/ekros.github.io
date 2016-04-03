@@ -269,7 +269,10 @@ var engine =
       this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
       if (this.me.textureIndex < this.me.FRAMES.left.length - 1)
       {
-        this.me.textureIndex++;
+        if (engine.engineCount%4 == 0)
+        {
+          this.me.textureIndex++;
+        }
       }
       else
       {
@@ -282,7 +285,10 @@ var engine =
       this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
       if (this.me.textureIndex < this.me.FRAMES.right.length - 1)
       {
-        this.me.textureIndex++;
+        if (engine.engineCount%4 == 0)
+        {
+          this.me.textureIndex++;
+        }
       }
       else
       {
@@ -521,7 +527,7 @@ var engine =
           var b1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/download.png']);
           solid(b1);
           jump_under(b1, function() {
-            window.open("file:///home/eros/devel/ekros.github.io/assets/Eric_resume_gamified.pdf");
+            window.open("http://ekros.github.com/assets/Eric_resume_gamified.pdf");
           });
           b1.position.x = this.me.x;
           b1.position.y = this.me.y - 80;
