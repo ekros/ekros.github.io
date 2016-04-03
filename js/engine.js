@@ -264,61 +264,58 @@ var engine =
   run: function()
   {
     // animations
-    if (this.me.status == RUNNING_LEFT)
+    if (this.engineCount%5 == 0)
     {
-      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
-      if (this.me.textureIndex < this.me.FRAMES.left.length - 1)
+      if (this.me.status == RUNNING_LEFT)
       {
-        if (this.engineCount%2 == 0)
+        this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
+        if (this.me.textureIndex < this.me.FRAMES.left.length - 1)
         {
           this.me.textureIndex++;
         }
+        else
+        {
+          this.me.textureIndex = 0;
+          // this.me.status = NOOP;
+        }
       }
-      else
+      else if (this.me.status == RUNNING_RIGHT)
       {
-        this.me.textureIndex = 0;
-        // this.me.status = NOOP;
-      }
-    }
-    else if (this.me.status == RUNNING_RIGHT)
-    {
-      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
-      if (this.me.textureIndex < this.me.FRAMES.right.length - 1)
-      {
-        if (this.engineCount%2 == 0)
+        this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
+        if (this.me.textureIndex < this.me.FRAMES.right.length - 1)
         {
           this.me.textureIndex++;
         }
+        else
+        {
+          this.me.textureIndex = 0;
+          // this.me.status = NOOP;
+        }
       }
-      else
+      else if (this.me.status == STOP_LEFT)
       {
+        console.log("STOP_LEFT");
         this.me.textureIndex = 0;
-        // this.me.status = NOOP;
+        this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
+        this.me.status = NOOP_LEFT;
+      }    
+      else if (this.me.status == STOP_RIGHT)
+      {
+        console.log("STOP_RIGHT");
+        this.me.textureIndex = 0;
+        this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
+        this.me.status = NOOP_RIGHT;
       }
-    }
-    else if (this.me.status == STOP_LEFT)
-    {
-      console.log("STOP_LEFT");
-      this.me.textureIndex = 0;
-      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
-      this.me.status = NOOP_LEFT;
-    }    
-    else if (this.me.status == STOP_RIGHT)
-    {
-      console.log("STOP_RIGHT");
-      this.me.textureIndex = 0;
-      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
-      this.me.status = NOOP_RIGHT;
-    }
-    else if (this.me.status == JUMP_LEFT)
-    {
-      console.log("JUMP_LEFT");
-      this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jump.png'].texture);
-    }    
-    else if (this.me.status == JUMP_RIGHT)
-    {
-      console.log("JUMP_RIGHT");
-      this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jumpd.png'].texture);
+      else if (this.me.status == JUMP_LEFT)
+      {
+        console.log("JUMP_LEFT");
+        this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jump.png'].texture);
+      }    
+      else if (this.me.status == JUMP_RIGHT)
+      {
+        console.log("JUMP_RIGHT");
+        this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jumpd.png'].texture);
+      }
     }
 
     // char movement
