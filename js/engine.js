@@ -269,7 +269,7 @@ var engine =
       this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
       if (this.me.textureIndex < this.me.FRAMES.left.length - 1)
       {
-        if (this.engineCount%4 == 0)
+        if (this.engineCount%2 == 0)
         {
           this.me.textureIndex++;
         }
@@ -285,7 +285,7 @@ var engine =
       this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
       if (this.me.textureIndex < this.me.FRAMES.right.length - 1)
       {
-        if (this.engineCount%4 == 0)
+        if (this.engineCount%2 == 0)
         {
           this.me.textureIndex++;
         }
@@ -342,7 +342,7 @@ var engine =
         child.texture = new PIXI.Texture(PIXI.loader.resources[child.FRAMES.left[child.textureIndex]].texture);
         if (child.textureIndex < child.FRAMES.left.length - 1)
         {
-          if (this.engineCount%3 == 0)
+          if (this.engineCount%5 == 0)
           {
             child.textureIndex++;
           }
