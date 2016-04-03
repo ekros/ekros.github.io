@@ -69,7 +69,7 @@ var engine =
         .load(setup); // call setup when finished
 
     window.addEventListener('keydown', function(event) {
-      console.log("engine: " + event.keyCode + " pressed!");
+      // console.log("engine: " + event.keyCode + " pressed!");
       switch (event.keyCode) {
         case 49: // 1
           engine.go_to_level(1);
@@ -300,9 +300,9 @@ var engine =
     else if (this.me.status == STOP_RIGHT)
     {
       console.log("STOP_RIGHT");
-//      this.me.textureIndex = 0;
-//      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
-//      this.me.status = NOOP_RIGHT;
+      this.me.textureIndex = 0;
+      this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
+      this.me.status = NOOP_RIGHT;
     }
     else if (this.me.status == JUMP_LEFT)
     {
@@ -521,7 +521,7 @@ var engine =
           var b1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/download.png']);
           solid(b1);
           jump_under(b1, function() {
-            location.href = "assets/Eric_resume_gamified.pdf";
+            window.open("file:///home/eros/devel/ekros.github.io/assets/Eric_resume_gamified.pdf");
           });
           b1.position.x = this.me.x;
           b1.position.y = this.me.y - 80;

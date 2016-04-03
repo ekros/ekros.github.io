@@ -14,7 +14,7 @@ var character = function(obj)
   console.log("Character behavior enabled.");
   obj.isCharacter = true;
   obj.blocked = false;
-  obj.jumpPower = 30;
+  obj.jumpPower = 25;
   obj.status = NOOP_RIGHT;
   obj.respawn = function()
   {
@@ -46,6 +46,7 @@ var enemy = function(obj)
     if (c.position.y < obj.position.y && c.fallSpeed > 0)
     {
       console.log("killed!");
+      c.jumping = false;
       c.jump(c.jumpPower/2);
       obj.position.y = 2000;
       engine.level.enemiesKilled++;
@@ -143,8 +144,6 @@ var controllable = function(obj)
 
   obj.left = function()
   {
-    console.log("engine.me.blocked " + engine.me.blocked);
-    console.log("obj.blocked " + obj.blocked);
     // if (!engine.me.blocked) obj.position.x -= speed;
     obj.position.x -= speed;
   };
@@ -156,11 +155,12 @@ var controllable = function(obj)
   };
 
   window.addEventListener('keydown', function(event) {
-    console.log(event.keyCode + " pressed!");
+    // console.log(event.keyCode + " pressed!");
     switch (event.keyCode) {
       case 37: // Left
         obj.moveLeft = true;
-        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = RUNNING_LEFT;
+        // if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = RUNNING_LEFT;
+        if (!engine.me.jumping) engine.me.status = RUNNING_LEFT;
       break;
 
       case 38: // Up
@@ -169,7 +169,8 @@ var controllable = function(obj)
 
       case 39: // Right
         obj.moveRight = true;
-        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = RUNNING_RIGHT;
+        // if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = RUNNING_RIGHT;
+        if (!engine.me.jumping) engine.me.status = RUNNING_RIGHT;
       break;
 
       case 40: // Down
@@ -180,8 +181,9 @@ var controllable = function(obj)
         event.preventDefault();
         if (obj.hasGravity()) {
           obj.jump(obj.jumpPower);
-          if (engine.me.status == NOOP_LEFT) engine.me.status = JUMP_LEFT;
-          if (engine.me.status == NOOP_RIGHT) engine.me.status = JUMP_RIGHT;
+          if (engine.me.status == RUNNING_LEFT) engine.me.status = JUMP_LEFT;
+          if (engine.me.status == RUNNING_RIGHT) engine.me.status = JUMP_RIGHT;
+          if (engine.me.status == STOP_LEFT || engine.me.status == STOP_RIGHT) engine.me.status = JUMP_RIGHT;
         }
       break;
 
@@ -199,13 +201,13 @@ var controllable = function(obj)
       case 37:
         console.log(event.keyCode + " key up left!");
         obj.moveLeft = false;
-        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = STOP_LEFT;
+        // if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = STOP_LEFT;
       break;
 
       case 39:
         console.log(event.keyCode + " key up right!");
         obj.moveRight = false;
-        if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = STOP_RIGHT;
+        // if (engine.me.status != JUMP_RIGHT && engine.me.status != JUMP_LEFT) engine.me.status = STOP_RIGHT;
       break;
 
       case 71:
