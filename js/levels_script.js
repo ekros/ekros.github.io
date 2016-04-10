@@ -4,11 +4,11 @@ var levels_script = [
 },
 {
   "opening_speech":[
-    "Hi! My name is Eric."
-    // "I'm a level 33 human web developer.",
-    // "Someone stole my resume. Will you help me?",
-    // "These monsters seem very suspicious!",
-    // "Use the arrow keys to move and the space bar to jump!"
+    "Hi! My name is Eric.",
+    "I'm a level 33 human web developer.",
+    "Someone stole my resume. Will you help me?",
+    "These monsters seem very suspicious!",
+    "Use the arrow keys to move and the space bar to jump!"
   ],
   "ending_speech":[
     "I found my resume.. well, some parts of it.",
