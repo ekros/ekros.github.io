@@ -297,14 +297,14 @@ var engine =
         console.log("STOP_LEFT");
         this.me.textureIndex = 0;
         this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
-        // this.me.status = NOOP_LEFT;
+        this.me.status = NOOP_LEFT;
       }    
       else if (this.me.status == STOP_RIGHT)
       {
         console.log("STOP_RIGHT");
         this.me.textureIndex = 0;
         this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.right[this.me.textureIndex]].texture);
-        // this.me.status = NOOP_RIGHT;
+        this.me.status = NOOP_RIGHT;
       }
       else if (this.me.status == JUMP_LEFT)
       {
@@ -435,6 +435,7 @@ var engine =
     if (index == null)
     {
       var index = 0;
+      obj.textBox = null;
     }
     else
     {

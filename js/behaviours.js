@@ -14,7 +14,7 @@ var character = function(obj)
   console.log("Character behavior enabled.");
   obj.isCharacter = true;
   obj.blocked = false;
-  obj.jumpPower = 25;
+  obj.jumpPower = 28;
   obj.status = NOOP_RIGHT;
   obj.respawn = function()
   {
