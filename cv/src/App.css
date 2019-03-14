@@ -1,0 +1,113 @@
+ @keyframes experience-node--enter {
+  0% {
+    width: 0px;
+  } 100% {
+    width: 180px;
+  }
+ }
+
+@keyframes skillbar--enter {
+  0% {
+    box-shadow: inset -1000px 0px white;
+  } 100% {
+    box-shadow: inset 0px 0px white;
+  }
+}
+
+body {
+  padding: 50px;
+}
+
+.App {
+  position: relative;
+  text-align: center;
+  border: 1px solid gray;
+  box-shadow: 2px 2px 6px black;
+  padding: 50px 200px 50px 200px;
+}
+
+.NoteOnSide {
+  position: absolute;
+  font-family: monospace;
+  writing-mode: vertical-lr;
+  left: 10px;
+  top: 40px;
+}
+
+.Avatar {
+  width: 100px;
+  height: 100px;
+  border: 1px solid gray;
+}
+
+.Title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0px 40px 0px;
+}
+
+.Section {
+  border-bottom: 2px dashed gray;
+  margin: 50px 0px;
+}
+
+.Skillbar {
+  color: lightgray;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 2px;
+  padding: 3px;
+  background: linear-gradient(45deg, crimson 0%, blue 90%);
+  text-align: left;
+  animation-name: skillbar--enter;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+.ExperienceNode {
+  display: inline-block;
+  position: relative;
+  width: 180px;
+  height: 100px;
+  text-align: left;
+}
+
+.ExperienceNode__line {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 0px;
+  height: 4px;
+  background: palegreen;
+  animation-name: experience-node--enter;
+  animation-timing-function: linear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.ExperienceNode__node {
+  position: absolute;
+  top: -3px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 100%;
+}
+
+.ExperienceNode__label {
+  position: relative;
+  right: 10px;
+  top: 8px;
+}
+
+.ExperienceNode__year {
+  position: relative;
+  right: 35px;
+  bottom: 35px;
+  transform: rotate(45deg);
+}
+
+.lang img {
+  vertical-align: -10px;
+}
