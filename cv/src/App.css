@@ -79,6 +79,9 @@ body {
   width: 0px;
   height: 4px;
   background: palegreen;
+}
+
+.ExperienceNode__line--animate {
   animation-name: experience-node--enter;
   animation-timing-function: linear;
   animation-duration: 1s;
@@ -95,10 +98,17 @@ body {
   border-radius: 100%;
 }
 
+.ExperienceNode__company {
+  position: relative;
+  font-weight: bold;
+  transform: translate(-16px, 94px) rotate(45deg);
+}
+
 .ExperienceNode__label {
   position: relative;
   right: 10px;
   top: 8px;
+  transform: translate(-20px, 80px) rotate(45deg);
 }
 
 .ExperienceNode__year {

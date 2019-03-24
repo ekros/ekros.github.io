@@ -4,7 +4,33 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = {
+      experience: false,
+      education: false,
+      languages: false,
+      interests: false,
+      contact: false
+  };
+
+  componentDidMount() {
+    document.addEventListener("scroll", this.handleScroll);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const { scrollTop } = document.documentElement;
+    const { experience, education, languages, interests, contact } = this.state;
+    console.log("scroll", document.documentElement.scrollTop, experience);
+    if (!experience && scrollTop > 300) {
+      console.log("experience!!");
+      this.setState({  experience: true });
+    }
+  };
+
   render() {
+    const { experience, education, languages, interests, contact } = this.state;
     return (
       <div className="App">
         <NoteOnSide>Made with ReactJS and vanilla CSS</NoteOnSide>
@@ -29,11 +55,11 @@ class App extends Component {
           <SkillBar label="C/C++" value={20} />
         <Section>Experience</Section>
           <br /><br />
-          <ExperienceNode lineDelay={0} label="Technician / Team leader" year="2006" />
-          <ExperienceNode lineDelay={1} label="Java / C++ developer" year="2008" />
-          <ExperienceNode lineDelay={2} label="Fullstack dev and IT officer" year="2009" />
-          <ExperienceNode lineDelay={3} label="Front-end dev" year="2016" />
-          <ExperienceNode lineDelay={4} label="" year="today" isLast />
+          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={0} company="Acer" label="Technician / Team leader" year="2006" />
+          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={1} company="Abiquo" label="Java / C++ developer" year="2008" />
+          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={2} company="ACB" label="Web dev and IT officer" year="2009" />
+          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={3} company="Dorna Sports" label="Front-end developer" year="2016" />
+          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={4} company="[Your company here]" label="" year="today" isLast />
         <Section>Education</Section>
           TODO: add some cool animation of electronics.. maybe a gif
           Telecomunications and electronics engineering (Universitat Politécnica de Catalunya)
@@ -101,15 +127,15 @@ const SkillBar = ({ label, value }) => (
     className="Skillbar">{label}</div>
 );
 
-// TODO-ING: trigger timeline animation only when is visible
-const ExperienceNode = ({ isLast, label, lineDelay, year }) => (
-  <div className="ExperienceNode">
+const ExperienceNode = ({ className, company, isLast, label, lineDelay, year }) => (
+  <div className={`ExperienceNode`}>
     {
       !isLast ?
-      <div style={{ animationDelay: `${lineDelay}s` }} className="ExperienceNode__line" /> : null
+      <div style={{ animationDelay: `${lineDelay}s` }} className={`ExperienceNode__line ${className}`} /> : null
     }
     <div className="ExperienceNode__node" />
-    <div className="ExperienceNode__label">{label}</div>
+    <div className="ExperienceNode__company">{company}</div>
+    <div className="ExperienceNode__label">{label || "-"}</div>
     <div className="ExperienceNode__year">{year}</div>
   </div>
 );
