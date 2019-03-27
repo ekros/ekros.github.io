@@ -46,9 +46,17 @@ body {
   margin: 10px 0px 40px 0px;
 }
 
+.Subtitle {
+  font-size: 20px;
+  margin: 10px 0px;
+}
+.Subtitle a {
+  text-decoration: none;
+}
+
 .Section {
   border-bottom: 2px dashed gray;
-  margin: 50px 0px;
+  margin: 120px 0px 50px 0px;
 }
 
 .Skillbar {

@@ -37,6 +37,9 @@ class App extends Component {
         <header>
           <Avatar />
           <Title>Eric Ros, Front-end developer</Title>
+          <Subtitle>Demos | <a href="https://codepen.io/ekros/" target="_blank">Codepen</a></Subtitle>
+          <Subtitle>Open-source projects | <a href="https://github.com/ekros/nice-react-layout" target="_blank">Nice React Layout</a> | <a href="https://github.com/ekros/react-play-editor">React Play Editor</a></Subtitle>
+          <Subtitle>Email | <a href="mailto:ericrosbh@gmail.com">ericrosbh@gmail.com</a></Subtitle>
         </header>
         <Section>
           Skills
@@ -61,7 +64,7 @@ class App extends Component {
           <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={3} company="Dorna Sports" label="Front-end developer" year="2016" />
           <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={4} company="[Your company here]" label="" year="today" isLast />
         <Section>Education</Section>
-          TODO: add some cool animation of electronics.. maybe a gif
+          <i className="fas fa-broadcast-tower fa-lg" />{"  "}
           Telecomunications and electronics engineering (Universitat Politécnica de Catalunya)
         <Section>Languages</Section>
           TODO: add an audio sample for every non-native language!!
@@ -95,7 +98,6 @@ class App extends Component {
               color: "navy"
             }
           ]}/>
-        <footer>Contact</footer>
       </div>
     );
   }
@@ -111,6 +113,10 @@ const Avatar = () => (
 
 const Title = ({ children }) => (
     <div className="Title">{children}</div>
+);
+
+const Subtitle = ({ children }) => (
+    <div className="Subtitle">{children}</div>
 );
 
 const Section = ({ children }) => (
