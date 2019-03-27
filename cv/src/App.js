@@ -108,7 +108,7 @@ const NoteOnSide = ({ children }) => (
 );
 
 const Avatar = () => (
-    <img className="Avatar" src="es.jpeg" alt="" />
+    <img className="Avatar" src="https://avatars1.githubusercontent.com/u/4777759?s=460&v=4" alt="" />
 );
 
 const Title = ({ children }) => (
