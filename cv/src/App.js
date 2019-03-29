@@ -37,9 +37,9 @@ class App extends Component {
         <header>
           <Avatar />
           <Title>Eric Ros, Front-end developer</Title>
-          <Subtitle>Demos | <a href="https://codepen.io/ekros/" target="_blank">Codepen</a></Subtitle>
-          <Subtitle>Open-source projects | <a href="https://github.com/ekros/nice-react-layout" target="_blank">Nice React Layout</a> | <a href="https://github.com/ekros/react-play-editor">React Play Editor</a></Subtitle>
-          <Subtitle>Email | <a href="mailto:ericrosbh@gmail.com">ericrosbh@gmail.com</a></Subtitle>
+          <Subtitle><SubtitleLabel>Demos</SubtitleLabel> <SubtitleContent><a href="https://codepen.io/ekros/" target="_blank">Codepen</a></SubtitleContent></Subtitle>
+          <Subtitle><SubtitleLabel>Open-source projects</SubtitleLabel><SubtitleContent><a href="https://github.com/ekros/nice-react-layout" target="_blank">Nice React Layout</a> | <a href="https://github.com/ekros/react-play-editor">React Play Editor</a></SubtitleContent></Subtitle>
+          <Subtitle><SubtitleLabel>Email</SubtitleLabel><SubtitleContent><a href="mailto:ericrosbh@gmail.com">ericrosbh@gmail.com</a></SubtitleContent></Subtitle>
         </header>
         <Section>
           Skills
@@ -58,8 +58,8 @@ class App extends Component {
           <SkillBar label="C/C++" value={20} />
         <Section>Experience</Section>
           <br /><br />
-          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={0} company="Acer" label="Technician / Team leader" year="2006" />
-          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={1} company="Abiquo" label="Java / C++ developer" year="2008" />
+          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={0} company="Acer" label="Technician-Team leader" year="2006" />
+          <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={1} company="Abiquo" label="Java & C++ developer" year="2008" />
           <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={2} company="ACB" label="Web dev and IT officer" year="2009" />
           <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={3} company="Dorna Sports" label="Front-end developer" year="2016" />
           <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={4} company="[Your company here]" label="" year="today" isLast />
@@ -117,6 +117,14 @@ const Title = ({ children }) => (
 
 const Subtitle = ({ children }) => (
     <div className="Subtitle">{children}</div>
+);
+
+const SubtitleLabel = ({ children }) => (
+  <div className="SubtitleLabel">{children}</div>
+);
+
+const SubtitleContent = ({ children }) => (
+  <div className="SubtitleContent">{children}</div>
 );
 
 const Section = ({ children }) => (
