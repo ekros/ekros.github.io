@@ -24,8 +24,9 @@ class App extends Component {
     const { experience, education, languages, interests, contact } = this.state;
     console.log("scroll", document.documentElement.scrollTop, experience);
     if (!experience && scrollTop > 300) {
-      console.log("experience!!");
-      this.setState({  experience: true });
+      this.setState({ experience: true });
+    } else if (!interests && scrollTop > 1630) {
+      this.setState({ interests: true });
     }
   };
 
@@ -67,7 +68,6 @@ class App extends Component {
           <i className="fas fa-broadcast-tower fa-lg" />{"  "}
           Telecomunications and electronics engineering (Universitat Politécnica de Catalunya)
         <Section>Languages</Section>
-          TODO: add an audio sample for every non-native language!!
           <h4>Native</h4>
           <p className="lang">Spanish <img src="es.jpeg" /></p>
           <p className="lang">Catalan <img src="cat.jpeg" /></p>
@@ -76,16 +76,16 @@ class App extends Component {
           <h4>Beginner</h4>
           <p className="lang">Dutch <img src="nl.jpeg" /></p>
         <Section>Interests</Section>
-        <InterestPie interests={[
+        <InterestPie className={interests ? "InterestPie__pie--animate" : ""} interests={[
+            {
+              label: "Creative writing",
+              weight: 0.3,
+              color: "gold"
+            },
             {
               label: "Game development",
               weight: 0.2,
               color: "palegreen"
-            },
-            {
-              label: "Creative writing",
-              weight: 0.2,
-              color: "crimson"
             },
             {
               label: "Design",
@@ -96,6 +96,11 @@ class App extends Component {
               label: "Traveling",
               weight: 0.2,
               color: "navy"
+            },
+            {
+              label: "Cats",
+              weight: 0.1,
+              color: "crimson"
             }
           ]}/>
       </div>
@@ -177,11 +182,11 @@ class InterestPie extends React.Component {
     });
   }
   render() {
-    const { interests } = this.props;
+    const { className, interests } = this.props;
     return (
-      <div style={{ display: "flex", width: "600px", height: "300px" }}>
-        <canvas ref={this.pie} width="300" height="300"></canvas>
-        <div style={{ width: "300px", height: "300px" }}>
+      <div style={{ display: "flex", justifyContent: "center", height: "300px" }}>
+        <canvas ref={this.pie} width="300" height="300" className={`InterestPie__pie ${className}`}></canvas>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "350px", height: "300px" }}>
           {
             interests && interests.map(interest => (
               <div style={{ color: interest.color, fontSize: "30px", fontWeight: "bold" }}>{interest.label}</div>
