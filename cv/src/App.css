@@ -8,7 +8,7 @@
 
 @keyframes skillbar--enter {
   0% {
-    box-shadow: inset -1000px 0px white;
+    box-shadow: inset -1500px 0px white;
   } 100% {
     box-shadow: inset 0px 0px white;
   }
@@ -76,7 +76,7 @@ body {
 
 .Section {
   border-bottom: 2px dashed gray;
-  margin: 120px 0px 50px 0px;
+  margin: 100px 0px 50px 0px;
 }
 
 .Skillbar {
@@ -88,8 +88,14 @@ body {
   background: linear-gradient(45deg, crimson 0%, blue 90%);
   text-align: left;
   animation-name: skillbar--enter;
-  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
+  animation-play-state: paused;
+}
+
+.Skillbar--animate {
+  animation-play-state: running;
 }
 
 .ExperienceNode {
@@ -164,4 +170,10 @@ body {
 
 .lang img {
   vertical-align: -10px;
+}
+
+.Presentation {
+  margin-top: 50px;
+  text-align: justify;
+
 }
