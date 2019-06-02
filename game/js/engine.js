@@ -57,7 +57,7 @@ var engine =
         .add('assets/eros1.png')
         .add('assets/eros2.png')
         .add('assets/eros3.png')
-        .add('assets/eros4.png')        
+        .add('assets/eros4.png')
         .add('assets/eros1d.png')
         .add('assets/eros2d.png')
         .add('assets/eros3d.png')
@@ -113,7 +113,7 @@ var engine =
     background.position.x = 0;
     background.position.y = 0;
     stage.addChild(background);
-    
+
     // // load tileset
     // var rectangles = [];
     // for (var i = 0; i < cols; i++)
@@ -187,12 +187,12 @@ var engine =
   opening_speech: function()
   {
     // opening_speech
-    this.talk(this.me, this.level.script.opening_speech, 200, 1000);
+    this.talk(this.me, this.level.script.opening_speech, 100, 1000);
   },
   ending_speech: function()
   {
     // ending speech
-    this.talk(this.me, this.level.script.ending_speech, 200, 1000, null, true);
+    this.talk(this.me, this.level.script.ending_speech, 100, 1000, null, true);
   },
   go_to_level: function(lvl)
   {
@@ -298,7 +298,7 @@ var engine =
         this.me.textureIndex = 0;
         this.me.texture = new PIXI.Texture(PIXI.loader.resources[this.me.FRAMES.left[this.me.textureIndex]].texture);
         this.me.status = NOOP_LEFT;
-      }    
+      }
       else if (this.me.status == STOP_RIGHT)
       {
         console.log("STOP_RIGHT");
@@ -310,7 +310,7 @@ var engine =
       {
         console.log("JUMP_LEFT");
         this.me.texture = new PIXI.Texture(PIXI.loader.resources['assets/eros_jump.png'].texture);
-      }    
+      }
       else if (this.me.status == JUMP_RIGHT)
       {
         console.log("JUMP_RIGHT");
@@ -415,7 +415,7 @@ var engine =
                 }
               }
           }
-        }  
+        }
       }
     }
     // check win condition
@@ -519,7 +519,7 @@ var engine =
       }
     }
   },
-  talkCallback: function(isEndingSpeech) 
+  talkCallback: function(isEndingSpeech)
   {
     if (isEndingSpeech)
     {
