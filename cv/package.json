@@ -1,6 +1,7 @@
 {
   "name": "cv",
   "version": "0.1.0",
+  "homepage" : "http://ekros.github.io/cv",
   "private": true,
   "dependencies": {
     "react": "^16.8.3",
