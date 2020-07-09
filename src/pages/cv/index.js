@@ -77,10 +77,10 @@ class App extends Component {
           <div  className="education"><small>2020</small>The Power MBA</div>
         <Section>Languages</Section>
           <h4>Native</h4>
-          <p className="lang">Spanish <img src="es.jpeg" /></p>
-          <p className="lang">Catalan <img src="cat.jpeg" /></p>
+          <p className="lang">Spanish <img src="assets/es.png" /></p>
+          <p className="lang">Catalan <img src="assets/cat.png" /></p>
           <h4>High</h4>
-          <p className="lang">English <img src="en.jpeg" /></p>
+          <p className="lang">English <img src="assets/en.png" /></p>
         <Section>Interests</Section>
         <InterestPie className={interests ? "InterestPie__pie--animate" : ""} interests={[
             {
@@ -105,12 +105,12 @@ class App extends Component {
             },
             {
               label: "Traveling",
-              weight: 0.15,
+              weight: 0.1,
               color: "navy"
             },
             {
               label: "Cats",
-              weight: 0.05,
+              weight: 0.1,
               color: "crimson"
             }
           ]}/>
@@ -189,6 +189,13 @@ class InterestPie extends React.Component {
       ctx.lineTo(150, 150);
       ctx.fill();
       ctx.closePath();
+      ctx.save();
+      ctx.translate(150, 150);
+      ctx.rotate(lastAngle + angle);
+      ctx.font = "14px Arial";
+      ctx.fillStyle = "black";
+      ctx.fillText(interest.label, 25, -4);
+      ctx.restore();
       lastAngle += angle;
     });
   }
@@ -197,7 +204,7 @@ class InterestPie extends React.Component {
     return (
       <div style={{ display: "flex", justifyContent: "center", height: "300px" }}>
         <canvas ref={this.pie} width="300" height="300" className={`InterestPie__pie ${className}`}></canvas>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "350px", height: "300px" }}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "350px", height: "300px" }} className="Interest__pie__labels">
           {
             interests && interests.map(interest => (
               <div key={interest.label} style={{ color: interest.color, fontSize: "30px", fontWeight: "bold" }}>{interest.label}</div>

@@ -200,7 +200,7 @@ body {
     padding: 10px 10px 10px 40px;
   }
   .App header {
-    height: 650px;
+    height: 685px;
   }
   .App .Subtitle {
     display: block;
@@ -211,5 +211,9 @@ body {
 
   .ExperienceNode {
     margin-bottom: 100px;
+  }
+
+  .Interest__pie__labels {
+    display: none !important;  
   }
 }
