@@ -20,7 +20,7 @@ export default () => (
   </header>
   <h4>CV</h4>
   <p>Visit my <Link to="/cv" target="_blank">CV (web version)</Link></p>
-  <p>You can download a more classic version <a href="assets/curriculum_2019.pdf" target="_blank">here</a></p>
+  <p>You can download a more classic version <a href="assets/curriculum_2020.pdf" target="_blank">here</a></p>
   <h4>Projects</h4>
   <h5><a href="https://zoomtasticgame.com" target="_blank">zoomtasticgame.com</a></h5>
   <p>{"It started as a weekend project. It's a web-based game where the player has to guess the country while the map zooms out."}</p>

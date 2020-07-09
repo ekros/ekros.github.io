@@ -25,11 +25,9 @@ class App extends Component {
     const { skills, experience, education, languages, interests, contact } = this.state;
     if (!skills && scrollTop > 200 ) {
       this.setState({ skills: true });
-      console.log("skills!!");
-    } else if (!experience && scrollTop > 500) {
+    } else if (!experience && scrollTop > 540) {
       this.setState({ experience: true });
-    } else if (!interests && scrollTop > 1730) {
-      console.log("interests!!");
+    } else if (!interests && scrollTop > 1760) {
       this.setState({ interests: true });
     }
   };
@@ -39,7 +37,7 @@ class App extends Component {
     return (
       <div className="App">
         <NoteOnSide>Made with ReactJS and vanilla CSS | Powered by Gatsby</NoteOnSide>
-        <header style={{ height: "440px" }}>
+        <header>
           <Avatar />
           <Title>Eric Ros, Front-end developer</Title>
           <Subtitle><SubtitleLabel>Demos</SubtitleLabel> <SubtitleContent><a href="https://codepen.io/ekros/" target="_blank">Codepen</a></SubtitleContent></Subtitle>
@@ -74,40 +72,45 @@ class App extends Component {
           <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={3} company="Dorna Sports" label="Front-end developer" year="2016" />
           <ExperienceNode className={experience ? "ExperienceNode__line--animate" : ""} lineDelay={4} company="[Your company here]" label="" year="today" isLast />
         <Section>Education</Section>
-          Telecomunications and electronics engineering (Universitat Politécnica de Catalunya)
+          <div className="education"><small>2007</small>Telecomunications and electronics engineering (Universitat Politécnica de Catalunya)</div>
+          <div style={{ height: "40px" }} />
+          <div  className="education"><small>2020</small>The Power MBA</div>
         <Section>Languages</Section>
           <h4>Native</h4>
           <p className="lang">Spanish <img src="es.jpeg" /></p>
           <p className="lang">Catalan <img src="cat.jpeg" /></p>
           <h4>High</h4>
           <p className="lang">English <img src="en.jpeg" /></p>
-          <h4>Beginner</h4>
-          <p className="lang">Dutch <img src="nl.jpeg" /></p>
         <Section>Interests</Section>
         <InterestPie className={interests ? "InterestPie__pie--animate" : ""} interests={[
             {
-              label: "Creative writing",
+              label: "Creative Writing",
               weight: 0.3,
               color: "gold"
             },
             {
-              label: "Game development",
+              label: "Virtual Reality",
+              weight: 0.2,
+              color: "orange"
+            },
+            {
+              label: "Game Development",
               weight: 0.2,
               color: "palegreen"
             },
             {
               label: "Design",
-              weight: 0.2,
+              weight: 0.1,
               color: "deepskyblue"
             },
             {
               label: "Traveling",
-              weight: 0.2,
+              weight: 0.15,
               color: "navy"
             },
             {
               label: "Cats",
-              weight: 0.1,
+              weight: 0.05,
               color: "crimson"
             }
           ]}/>

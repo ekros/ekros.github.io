@@ -2,7 +2,7 @@
   0% {
     width: 0px;
   } 100% {
-    width: 180px;
+    width: 160px;
   }
  }
 
@@ -23,8 +23,10 @@
 }
 
 body {
-  font-family: 'Nanum Gothic', sans-serif;
-  padding: 50px;
+  padding: 20px 100px;
+  background: aliceblue;
+  font-family: "Abel", sans-serif;
+  font-size: 140%;
 }
 
 .App {
@@ -33,6 +35,9 @@ body {
   border: 1px solid gray;
   box-shadow: 2px 2px 6px black;
   padding: 50px 200px 50px 200px;
+}
+.App header {
+  height: 500px;
 }
 
 .NoteOnSide {
@@ -50,14 +55,14 @@ body {
 }
 
 .Title {
-  font-size: 24px;
+  font-size: 1em;
   font-weight: bold;
   margin: 10px 0px 40px 0px;
 }
 
 .Subtitle {
   display: flex;
-  font-size: 20px;
+  font-size: 0.8em;
   margin: 10px auto;
   width: 600px;
 }
@@ -80,8 +85,8 @@ body {
 }
 
 .Skillbar {
-  color: lightgray;
-  font-size: 18px;
+  color: white;
+  font-size: 0.65em;
   font-weight: bold;
   margin: 2px;
   padding: 3px;
@@ -101,7 +106,7 @@ body {
 .ExperienceNode {
   display: inline-block;
   position: relative;
-  width: 180px;
+  width: 160px;
   height: 100px;
   text-align: left;
 }
@@ -152,6 +157,15 @@ body {
   transform: rotate(45deg);
 }
 
+.education {
+  text-align: left;
+}
+
+.education small {
+  color: gray;
+  margin-right: 30px;
+}
+
 .InterestPie__pie {
   transform: rotateY(90deg) rotateZ(-180deg);
 }
@@ -175,5 +189,27 @@ body {
 .Presentation {
   margin-top: 50px;
   text-align: justify;
+}
 
+@media (max-width: 1024px) {
+  body {
+    padding: 0px;
+  }
+
+  .App {
+    padding: 10px 10px 10px 40px;
+  }
+  .App header {
+    height: 650px;
+  }
+  .App .Subtitle {
+    display: block;
+  }
+  .App .SubtitleLabel {
+    text-align: left;
+  }
+
+  .ExperienceNode {
+    margin-bottom: 100px;
+  }
 }
