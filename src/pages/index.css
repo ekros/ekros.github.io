@@ -10,8 +10,11 @@ body {
 }
 
 .presentation {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
   font-size: 1em;
   text-align: justify;
+  padding: 2px;
 }
 
 a {
@@ -33,13 +36,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header {
-  color: lightgray;
-  background: #293139;
-  padding: 20px;
+  color: black;
+  /* background: #293139; */
+  background: url("/assets/working.jpg");
+  background-repeat:no-repeat;
+  background-position: 50% 0%;
+  padding: 20px 200px;
 }
 
-.sticky-header {
-  background: #293139;
+header .frontend-header {
+  font-size: 100px;
+  text-align: center;
 }
 
 @media (max-width: 1024px) {

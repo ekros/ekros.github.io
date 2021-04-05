@@ -38,8 +38,7 @@ class App extends Component {
       <div className="App">
         <NoteOnSide>Made with ReactJS and vanilla CSS | Powered by Gatsby</NoteOnSide>
         <header>
-          <Avatar />
-          <Title>Eric Ros, Front-end developer</Title>
+          <Title>Eric Ros, Senior Front-end developer</Title>
           <Subtitle><SubtitleLabel>Demos</SubtitleLabel> <SubtitleContent><a href="https://codepen.io/ekros/" target="_blank">Codepen</a></SubtitleContent></Subtitle>
           <Subtitle><SubtitleLabel>Open-source projects</SubtitleLabel><SubtitleContent><a href="https://github.com/ekros/nice-react-layout" target="_blank">Nice React Layout</a> | <a href="https://github.com/ekros/react-play-editor">React Play Editor</a></SubtitleContent></Subtitle>
           <Subtitle><SubtitleLabel>Email</SubtitleLabel><SubtitleContent><a href="mailto:ericrosbh@gmail.com">ericrosbh@gmail.com</a></SubtitleContent></Subtitle>
@@ -58,7 +57,9 @@ class App extends Component {
           <SkillBar className={skills ? "Skillbar--animate" : ""} label="Git" value={80} />
           <SkillBar className={skills ? "Skillbar--animate" : ""} label="Typescript" value={70} />
           <SkillBar className={skills ? "Skillbar--animate" : ""} label="NodeJS / MeteorJS" value={60} />
+          <SkillBar className={skills ? "Skillbar--animate" : ""} label="ElectronJS" value={55} />
           <SkillBar className={skills ? "Skillbar--animate" : ""} label="System administration" value={50} />
+          <SkillBar className={skills ? "Skillbar--animate" : ""} label="Svelte" value={45} />
           <SkillBar className={skills ? "Skillbar--animate" : ""} label="React Native" value={40} />
           <SkillBar className={skills ? "Skillbar--animate" : ""} label="Design" value={35} />
           <SkillBar className={skills ? "Skillbar--animate" : ""} label="Ruby On Rails" value={30} />
@@ -77,10 +78,10 @@ class App extends Component {
           <div  className="education"><small>2020</small>The Power MBA</div>
         <Section>Languages</Section>
           <h4>Native</h4>
-          <p className="lang">Spanish <img src="assets/es.png" /></p>
-          <p className="lang">Catalan <img src="assets/cat.png" /></p>
+          <p className="lang">Spanish <img src="../assets/es.png" /></p>
+          <p className="lang">Catalan <img src="../assets/cat.png" /></p>
           <h4>High</h4>
-          <p className="lang">English <img src="assets/en.png" /></p>
+          <p className="lang">English <img src="../assets/en.png" /></p>
         <Section>Interests</Section>
         <InterestPie className={interests ? "InterestPie__pie--animate" : ""} interests={[
             {
@@ -121,10 +122,6 @@ class App extends Component {
 
 const NoteOnSide = ({ children }) => (
   <div className="NoteOnSide">{children}</div>
-);
-
-const Avatar = () => (
-    <img className="Avatar" src="https://avatars1.githubusercontent.com/u/4777759?s=460&v=4" alt="" />
 );
 
 const Title = ({ children }) => (

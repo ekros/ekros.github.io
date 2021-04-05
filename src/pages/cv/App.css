@@ -55,9 +55,12 @@ body {
 }
 
 .Title {
-  font-size: 1em;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(1px);
+  font-size: 1.1em;
   font-weight: bold;
   margin: 10px 0px 40px 0px;
+  width: 100%;
 }
 
 .Subtitle {
@@ -187,7 +190,11 @@ body {
 }
 
 .Presentation {
-  margin-top: 50px;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+  color: black;
+  margin-top: 150px;
+  padding: 2px;
   text-align: justify;
 }
 
@@ -214,6 +221,6 @@ body {
   }
 
   .Interest__pie__labels {
-    display: none !important;  
+    display: none !important;
   }
 }
