@@ -45,12 +45,21 @@ header {
 }
 
 header .frontend-header {
-  font-size: 100px;
+  font-size: 6vw;
   text-align: center;
 }
 
 @media (max-width: 1024px) {
   body {
     padding: 0px;
+  }
+
+  main {
+    width: 100%;
+  }
+
+  header {
+    background-size: contain;
+    padding: 20px 10px;
   }
 }

@@ -4,7 +4,7 @@ import './index.css';
 
 // <p>Visit my <Link to="/game" target="_blank">Gamified CV</Link></p>
 export default () => (
-  <div>
+  <main>
   <header>
     <h1 className="frontend-header"><span>{`<`}</span>FrontEndDeveloper<span>{`/>`}</span></h1>
     <h2>Eric Ros</h2>
@@ -34,5 +34,5 @@ export default () => (
   <p>A simple cryptocurrencies app. It uses a microservice to grab data from Twitter based on your favorite coins. Not maintained for a while.</p>
   <h5><a href="https://github.com/ekros/react-play-editor" target="_blank">react-play-editor</a></h5>
   <p>Create React components without leaving the browser and play with props and state with its auto-generated forms. This was designed to be something similar to Storybook.</p>
-  </div>
+  </main>
 )
