@@ -528,7 +528,7 @@ var engine =
           var b1 = new PIXI.Sprite(PIXI.utils.TextureCache['assets/download.png']);
           solid(b1);
           jump_under(b1, function() {
-            window.open("http://ekros.github.com/game/assets/curriculum_2020.doc");
+            window.open("http://ekros.github.com/assets/Eric_resume_gamified.pdf");
           });
           b1.position.x = this.me.x;
           b1.position.y = this.me.y - 80;
