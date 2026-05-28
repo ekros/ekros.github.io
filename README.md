@@ -70,12 +70,7 @@ const eric = {
 
 <div align="center">
 
-<img width="390" src="https://github-readme-stats.vercel.app/api?username=ekros&show_icons=true&theme=radical&hide_border=true&count_private=true&include_all_commits=true" alt="Eric's GitHub Stats" />
 <img width="390" src="https://github-readme-streak-stats.herokuapp.com?user=ekros&theme=radical&hide_border=true" alt="Eric's Streak Stats" />
-
-<br/>
-
-<img width="325" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ekros&layout=compact&theme=radical&hide_border=true&langs_count=8" alt="Top Languages" />
 
 </div>
 
